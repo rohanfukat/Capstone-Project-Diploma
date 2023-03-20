@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mongodb_url = "mongodb://0.0.0.0:27017/Computer_Dept";
+const mongodb_url = "mongodb+srv://vedroh123:vedroh123@cluster1.omdsyen.mongodb.net/Comp_Dept";
 
 
 mongoose.set('strictQuery',false);
