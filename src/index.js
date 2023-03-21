@@ -8,10 +8,13 @@ const student = require("./middleware/student_operation")
 app.use(express.urlencoded({extended: true}));
 const helper = require("./middleware/Helper")
 const session = require("express-session");
+const bodyparser = require("body-parser");
+const { body} = require('express-validator');
+const{validationResult } = require("express-validator")
 
 
 
-const cookie = require("cookie-parser")
+const cookie = require("cookie-parser");
 // const helper = require("./middleware/Helper")
 
 //using cookies
@@ -24,12 +27,12 @@ app.engine('html', require('ejs').renderFile);
 
 // for body parsing
 app.use(express.urlencoded({extended: false}));
+// const url
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        data:"hello",
       secure: false,
       maxAge: 3600000 // session expires after 1 hour
     }
@@ -50,6 +53,8 @@ app.get("/login_display",(req,resp)=>{
     resp.render("login")
 })
 
+
+// for login redirection
 app.get("/login",[helper.redirect_user],(req,resp)=>{
     resp.render("login");
 })
@@ -87,30 +92,58 @@ app.get("/teacher_menu",(req,resp)=>{
     resp.render("teacher_menu")
 })
 
-app.get("/student_register", async(req,resp)=>{
+app.get("/student_register", async(req,resp,err)=>{
     resp.render("register_student");
+    if(err){
+        resp.status(err);
+    }
 })
 
-app.post("/student_register",student.student_register,async(req,resp)=>{
-    resp.send("Student Registered Successfully")
+app.post("/student_register",[
+
+    // validate.check('stud_name',"The username should be length 5").exists().length({min:3}),
+
+    body('stud_name').notEmpty().withMessage('Username cannot be empty'),
+    body('stud_name').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),
+    body('stud_phone').isLength({ max: 10 }).withMessage('ph no. 10 digit')
+
+],async(req,resp)=>{
+    const error = validationResult(req);
+    if(!error.isEmpty())
+    {
+        return resp.render("register_student",{msg:"Please enter valid Details"})
+    }
+    else{
+        student.student_register
+    }
+    // resp.send("Student Registered Successfully")
 })
 
 
-app.get("/teacher_login",(req,resp)=>{
-
-})
-
-app.post("/teacher_login",(req,resp)=>{
-    
-})
 
 app.get("/register_teacher",(req,resp,next)=>{
     resp.render("register_teacher")
 })
 
-app.post("/register_teacher",[teacher.register_teacher],(req,resp,next)=>{
-    resp.send("Register Successfully");
-})
+app.post("/register_teacher",
+[
+
+    // validate.check('stud_name',"The username should be length 5").exists().length({min:3}),
+
+    body('teacher_name').notEmpty().withMessage('Username cannot be empty'),
+    body('teacher_name').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),
+    body('teacher_no').isLength({ max: 10 }).withMessage('ph no. 10 digit')
+
+],[teacher.register_teacher],(req,resp,next,err)=>{
+    const error = validationResult(req);
+    if(!error.isEmpty())
+    {
+        return resp.render("register_student",{msg:"Please enter valid Details"})
+    }
+    else{
+        teacher.register_teacher
+    }
+    })
 
 app.get("/create_classroom",[teacher.create_classroom],(req,resp,next)=>{
     resp.send("Classroom created successfully")

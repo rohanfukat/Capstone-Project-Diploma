@@ -56,8 +56,9 @@ async function createCookie(req,resp,next,data,token)
     console.log("Cookie Stored : "+cookie);
     if(cookie) 
         console.log("Cookie set : ",true)
-    else
+    else{
         console.log("Cookie set : ",false)
+    }
     
 }
 
@@ -68,10 +69,12 @@ async function createCookie_stud(req,resp,next,data,token)
     const cookie = req.cookies.data;
     // const sep = cookie.split(" ");
     // console.log("Cookie : "+sep[1]);
+    console.log("Cookie Stored : "+cookie);
     if(cookie)
         console.log("Cookie set : ",true)
     else
         console.log("Cookie set : ",false)
+        
 }
 
 async function redirect_user(req,resp,next)
@@ -88,9 +91,9 @@ async function redirect_user(req,resp,next)
         {
             resp.redirect("./Student_menu");
             console.log("Student Redirected Successfully")
-            return
+            return "Student Redirected Successfully";
         }
-        else{   next()  }
+        // else{   next()  }
 
     
     }
@@ -105,9 +108,9 @@ async function redirect_user(req,resp,next)
 
             if(req.cookies.Teach_authToken == getTeacher[0].token)
             {
-                resp.redirect("./teacher_menu")
+                resp.redirect("/teacher_menu")
                 console.log("Teacher Redirected Successfully")
-                return 
+                return "Teacher Redirected Successfully"
             }
             else{       next()      }
             

@@ -10,7 +10,7 @@
   <div class="container">
     <div class="title">Teacher Registration</div>
     <div class="content">
-      <form action="/register_teacher" method="post">
+      <form action="/register_teacher" method="post" id = "teacher_form">
         <div class="user-details">
           <div class="input-box">
             <span class="details"></span> 
@@ -70,21 +70,36 @@
     </div>
   </div>
 
+  <% if(locals.e) { %>
+    <!-- <div class="alert alert-danger" role="alert"><%= e %></div> -->
+    <script>
+          let a = '<%=e %>';
+      alert(a);
+    </script>
+    <% } %>
+    
+
 <!--MY SCRIPT-->
   <script>
-    function phonevalidate()     
-    {
-      phonenumber=document.getElementById("phonenumber").value;
-      if(document.getElementById("phonenumber").value=="")
-      {
-        alert("please enter the details")
-      }
-      if(phonenumber.length<10 || phonenumber.length>10)
-      {
-        alert("please enter valid phone number")
-        
-      }     
-  }
+
+  //  function phonevalidate()     
+  //   { 
+  //     var form = document.getElementById("teacher_form");
+  //     phonenumber=document.getElementById("phonenumber").value;
+  //     if(document.getElementById("phonenumber").value=="")
+  //     {
+  //       alert("please enter the details")
+  //     }
+  //     if(phonenumber.length<10 || phonenumber.length>10)
+  //     {
+  //       alert("please enter valid phone number")
+  //     }   
+  //     else{
+  //       form.submit()
+  //       alert("Registered Successfully")
+  //     }  
+  // }
+
   </script>
 </body>
 </html>

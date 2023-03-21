@@ -86,27 +86,36 @@
           </div>
         </div>
         <div class="button">
-          <input type="submit" value="Register" onclick="phonevalidate()">
+          <!-- <input type="submit" value="Register" onclick="phonevalidate()"> -->
+          <input type="submit" value="Register">
         </div>
       </form>
     </div>
   </div>
   
 
+    <% if(locals.msg) { %>
+    <!-- <div class="alert alert-danger" role="alert"><%= msg %></div> -->
+    <script>
+          let a = '<%=msg %>';
+      alert(a);
+    </script>
+    <% } %>
+
 <!--MY SCRIPT-->
   <script>
-    function phonevalidate()     
-    {
-      phonenumber=document.getElementById("phonenumber").value;
-      if(document.getElementById("phonenumber").value=="")
-      {
-        alert("please enter the details")
-      }
-      if(phonenumber.length<10 || phonenumber.length>10)
-      {
-        alert("please enter valid phone number")     
-      }     
-  }
+  //   function phonevalidate()     
+  //   {
+  //     phonenumber=document.getElementById("phonenumber").value;
+  //     if(document.getElementById("phonenumber").value=="")
+  //     {
+  //       alert("please enter the details")
+  //     }
+  //     if(phonenumber.length<10 || phonenumber.length>10)
+  //     {
+  //       alert("please enter valid phone number")     
+  //     }     
+  // }
   </script>
 </body>
 </html>

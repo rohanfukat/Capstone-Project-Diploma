@@ -24,7 +24,8 @@ async function student_register(req,resp,next)
     // console.log(req.body.stud_roll);
     const status = await student_reg_data.save();
     console.log(status)
-    next();
+    resp.render("login")
+    console.log("Student Registered Successfully");
     }
     catch(e)
     {

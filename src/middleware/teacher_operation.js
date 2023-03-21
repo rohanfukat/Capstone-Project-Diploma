@@ -8,6 +8,9 @@ const Qrcode = require('qrcode');
 const { generate } = require("randomstring");
 const app = express();
 app.use(cookie());
+const flash = require("express-flash");
+
+app.use(flash())
 
 async function register_teacher(req,resp,next){
 
@@ -21,15 +24,18 @@ async function register_teacher(req,resp,next){
             mobileno:req.body.teacher_no
         })
 
-        helper.generateAuthToken(req,resp,next);
+        // helper.generateAuthToken(req,resp,next);
 
         const status = await teacher_reg_data.save();
         console.log(status);
-        next();
+        // next();
+        resp.redirect("/login")
 
     }catch(e)
     {
-        console.log(e)
+        // console.log(e) if error is caugth
+        var msg = "unique id already present"
+        resp.render("register_teacher",{e:msg});
     }
 }
 
@@ -82,11 +88,8 @@ async function login_teacher_verify(req,resp,next){
 
         console.log("Return token : "+token);
         helper.createCookie(req,resp,next,unique_id,token);
-        }
 
-        if(password == verify_password[0].password)
-        {
-            return resp.redirect("./teacher_menu")
+        resp.redirect("./teacher_menu")
         }
         else{
             return resp.status(400).send("Incorrect Password")
