@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+        <form action = "/login" method = "post">
+                Enter name : <input type = "text" name = "logname" id = "t1"/><br/>
+                Enter password : <input type = "text" name = "logpass"/><br/>
+                <input type = "submit" value = "Submit" />&nbsp;&nbsp;
+                <p>Don't have an account ? <a href="/register">Register</a></p>
+        </form>
+</body>
+</html> 
+
+ -->
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -109,7 +129,7 @@ function teacherVerify()
 }
 .wrapper{
     width: 100vw;
-    height: 100vh; /*for moving the form up and down*/
+    height: 100vh; 
     /* background-color: #d9d6dddc;     */
     background: linear-gradient(135deg, #50a7e1, #d433d2);
     position: fixed;
@@ -131,7 +151,7 @@ div.buttonHolder{
 }
 .modalForm{
     width: 400px;
-    height: 560px; /*height of the form*/
+    height: 560px; 
     background-color: #fff;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
@@ -139,7 +159,7 @@ div.buttonHolder{
     align-items: center;
     flex-direction: column;
 }
-.actionBtns{    /*toggling button*/
+.actionBtns{    
     width: 90%;
     background-color: royalblue;
     margin-top: 40px;
@@ -165,7 +185,7 @@ div.buttonHolder{
 }
 .moveBtn{
     position: absolute;
-    width: 50%; /*for toggle button size*/
+    width: 50%; 
     height: 90%;
     margin: 2px;
     border: none;
@@ -183,16 +203,16 @@ div.buttonHolder{
     transition: all 0.2s ease-in-out;
 }
 .inputGroup{
-    width: 340px; /*width of textfields*/
-    margin: 2em 0; /*difference between the textfields of student login form*/
+    width: 340px;
+    margin: 2em 0; 
     background-color: rgba(236, 240, 241, 0.977);
     border-radius: 50px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     font-weight: 500;
 }
 .inputGroup input{
-    width: 100%; /*for moving the text of the textfield*/
-    padding: 1em 1.5em; /*same*/
+    width: 100%; 
+    padding: 1em 1.5em;
     background-color: transparent;
     border: none;
     border-radius: 50px;
@@ -229,6 +249,19 @@ div.buttonHolder{
 }
 .teachForm{
     display: block;
+}
+
+
+/* media qurey */
+
+@media  (max-width:500px){
+    .modalForm{
+        
+        width:82vw;
+    }
+    .inputGroup{
+        width: 70vw;
+    }
 }
 </style>
 </body>
