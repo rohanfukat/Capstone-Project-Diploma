@@ -72,6 +72,25 @@
             </div>
         </div>
     </div>
+
+
+    <% if(locals.msg) { %>
+        <script>
+              let msg = '<%=msg %>';
+          alert(msg);
+        </script>
+        <% } %>
+
+    <% if(locals.error) { %>
+        <script>
+              let error = '<%=error %>';
+          alert(error);
+        </script>
+        <% } %>
+
+        
+
+
     <script> 
 
 const studentlogin = document.querySelector(".studentlogin"); //here for signup button toggling wala for ours it will be student login
@@ -116,6 +135,8 @@ function teacherVerify()
     alert("Please enter all the details");
     }
 }
+
+
 
 </script>
 <style>

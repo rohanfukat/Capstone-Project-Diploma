@@ -49,7 +49,7 @@ app.get("/welcome",(req,resp)=>{
 })
 
 
-app.get("/login_display",(req,resp)=>{
+app.get("/",(req,resp)=>{
     resp.render("login")
 })
 
@@ -107,16 +107,12 @@ app.post("/student_register",[
     body('stud_name').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),
     body('stud_phone').isLength({ max: 10 }).withMessage('ph no. 10 digit')
 
-],async(req,resp)=>{
+],[student.student_register],async(req,resp)=>{
     const error = validationResult(req);
     if(!error.isEmpty())
     {
         return resp.render("register_student",{msg:"Please enter valid Details"})
     }
-    else{
-        student.student_register
-    }
-    // resp.send("Student Registered Successfully")
 })
 
 
@@ -145,9 +141,14 @@ app.post("/register_teacher",
     }
     })
 
-app.get("/create_classroom",[teacher.create_classroom],(req,resp,next)=>{
+app.post("/create_classroom",[teacher.create_classroom],(req,resp,next)=>{
     resp.send("Classroom created successfully")
 })
+
+app.get("/create_classroom",(req,resp)=>{
+    resp.render("create_classroom");
+})
+
 
 app.get("/login_teacher",[teacher.login_teacher_verify],(req,resp,next)=>{
     resp.send("Login successfull");

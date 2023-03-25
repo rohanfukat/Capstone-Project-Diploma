@@ -29,12 +29,13 @@ async function register_teacher(req,resp,next){
         const status = await teacher_reg_data.save();
         console.log(status);
         // next();
-        resp.redirect("/login")
+        console.log("hello");
+        resp.redirect("/login_display")
 
     }catch(e)
     {
         // console.log(e) if error is caugth
-        var msg = "unique id already present"
+        var msg = "unique id or password already present"
         resp.render("register_teacher",{e:msg});
     }
 }
@@ -43,14 +44,14 @@ async function create_classroom(req,resp,next){
 
     try{
         const create_class =  new teacher.teacher_classroom_model({
-            uniqueid:"999",
-            year:"TY",
-            discipline:"CO-1",
-            semester:"6",
-            subject:"MAD",
-            stud_capacity:[90],
-            roll_range:"1801-1860",
-            create_qr_dates:["27/2/2023"],
+            uniqueid:req.cookies.Teach_data,
+            year:req.body.select1,
+            discipline:req.body.discipline,
+            semester:req.body.select2,
+            subject:req.body.subject,
+            // stud_capacity:70,
+            roll_range:req.body.roll_range,
+            // create_qr_dates:["27/2/2023"],
         })
 
         const status = await create_class.save();
@@ -74,7 +75,7 @@ async function login_teacher_verify(req,resp,next){
 
         if(verify_id.length == 0)
         {
-            return resp.status(404).send("ID Not Found")
+            return resp.render("login",{msg:"ID not found"})
         }
 
         const verify_password = await teacher.teacher_register_model.find({uniqueid:unique_id}).select({password:1});
@@ -92,7 +93,7 @@ async function login_teacher_verify(req,resp,next){
         resp.redirect("./teacher_menu")
         }
         else{
-            return resp.status(400).send("Incorrect Password")
+            return resp.render("login",{error:"Incorrect password"})
         }
 
     }catch(e)

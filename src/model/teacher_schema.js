@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const teacher_register_schema = new mongoose.Schema({
     uniqueid:{
         type:String,
-        // unique:true
+        unique:true
     },
     name:String,
     password:{
@@ -36,6 +36,7 @@ const teacher_classroom_schema = new mongoose.Schema({
     }
 });
 
-const teacher_classroom_model = new mongoose.model("Teahcer_classroom",teacher_classroom_schema);
+
+const teacher_classroom_model = new mongoose.model("Teacher_classroom",teacher_classroom_schema);
 
 module.exports = {teacher_register_model,teacher_classroom_model};

@@ -87,7 +87,7 @@
         </div>
         <div class="button">
           <!-- <input type="submit" value="Register" onclick="phonevalidate()"> -->
-          <input type="submit" value="Register">
+          <input type="submit" value="Register" onclick="phonevalidate()">
         </div>
       </form>
     </div>
@@ -102,20 +102,28 @@
     </script>
     <% } %>
 
+    <% if(locals.error) { %>
+      <script>
+            let duplicate = '<%=error %>';
+        alert(duplicate);
+      </script>
+      <% } %>
+
 <!--MY SCRIPT-->
   <script>
-  //   function phonevalidate()     
-  //   {
-  //     phonenumber=document.getElementById("phonenumber").value;
-  //     if(document.getElementById("phonenumber").value=="")
-  //     {
-  //       alert("please enter the details")
-  //     }
-  //     if(phonenumber.length<10 || phonenumber.length>10)
-  //     {
-  //       alert("please enter valid phone number")     
-  //     }     
-  // }
+    function phonevalidate()     
+    {
+      phonenumber=document.getElementById("phonenumber").value;
+      if(document.getElementById("phonenumber").value=="")
+      {
+        alert("please enter the details")
+      }
+      if(phonenumber.length<10 || phonenumber.length>10)
+      {
+        alert("please enter valid phone number")     
+      }  
+      
+  }
   </script>
 </body>
 </html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="style.css">
+<title>Classroom Menu</title>
+<body>
+   <form id="forme" name="/create_classroom" method="post" >
+    <nav>
+        <div class="logo">
+            <p>Teacher</p>
+        </div>
+        
+        <ul>
+            <!-- <li><a href="#">Teacher</a></li> -->
+             <li><a href="qr_menu/index.html">Create QR</a></li>
+              <li><a href="index.html">Classroom</a></li>
+               <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="background_color"></div>
+
+    <!-- <div class="mybutton">
+        <input type="submit" value="clickme" onclick=""/>
+    </div> -->
+
+    <div class="modalForm">
+        <div class="title">Create Classroom</div>
+        <div class="content">
+            <form action="/create_classroom" method="post">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details"></span>
+                        <input type="text" placeholder="Roll range 1101-1161" required oninput="this.value=value.replace(/[^0-9,-]/gi,'');" id="roll" name = "roll_range">
+                        
+                        <!-- <div class="input-box">
+                            <span class="details"></span> 
+                            <input type="text" placeholder="name" required>
+                          </div> -->
+                        
+                        <div class="line">___________________</div>
+                        
+                        
+                        <select class="myselect2" placeholder="year" required  id="select1" name="select1" onchange="semester_changing()">
+                            <option disabled selected>Select your year</option>
+                            <!-- <option value="">Year</option> -->
+                            <option value="FY">FY</option>
+                            <option value="SY">SY</option>
+                            <option value="TY">TY</option>
+                        </select>
+                      </div>
+
+                    <!-- <div class="text">
+                        hint: roll-range: 1801-1861
+                    </div> -->
+
+
+                   
+
+
+                    <select class="myselect3" placeholder="select your semester" required id="select2" name="select2">
+                        <option disabled selected>Select your semester</option>
+                         <!-- <option value=""></option>
+                           <option value="first">first</option>
+                           <option value="second">second</option>
+                          <option value="third">third</option>
+                          <option value="fourth">fourth</option>
+                          <option value="fifth">fifth</option>
+                          <option value="sixth">sixth</option> --> 
+                      </select>
+
+                      <select class="myselect" placeholder="discipline" required name = "discipline">
+<!-- <optgroup label="Select your department"></optgroup> -->
+<option disabled selected >Select your discipline</option>
+<option>CO1</option>
+<option>CO2</option>
+            </select>
+
+            <select class="myselect4" placeholder="select your subject" required name="subject">
+                <option disabled selected>Select your subject</option>
+                <option value=""></option>
+                  <option value="CSS">CSS</option>
+                  <option value="MAD">MAD</option>
+                  <option value="MAN">MAN</option>
+                  <option value="PHP">PHP</option>
+                  <option value="PWP">PWP</option>
+                  <option value="EDE">EDE</option>
+              </select>
+
+              <div class="button">
+                <input type="submit" value="Create" onclick="">
+              </div>
+            
+                </div>
+
+                <style>
+                    *{
+    /* background: linear-gradient(135deg, #71b7e6, #9b59b6);  */
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+nav{   /*navbar class track styling*/
+    width: 100%;
+    height: 75px;
+    line-height: 75px;
+    padding: 0px 100px;
+    position: fixed;
+    background-image: linear-gradient(#033747,#012733);
+}
+
+nav .logo p{
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+}
+
+nav ul{ /*styling the unorderd list*/
+float: right;
+}
+
+nav li{ /*styling the list items position as a bulk*/
+display:inline-block;
+list-style: none;  /*removing the bullets from the list*/
+}
+
+nav li a{ /*styling the nav list items size and stuff*/ 
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 0px 30px;
+    text-decoration: none;
+    color: white;
+}
+
+nav li a:hover{
+    color: #ff8c69;
+    transition: all 0.4s ease 0s;
+}
+
+.background_color{ /*setting the background color using the div class after the nav end*/ 
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    height: 621px;
+}
+
+/* .mybutton{
+    position: fixed;
+} */
+
+.modalForm{
+
+    width: 699px;
+    background-color: #ffffff;
+    top: 114px;
+    position: fixed;
+    height: 474px;
+    margin-left: 350px;
+    border-radius: 47px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+
+
+    /* width: 400px;
+    min-height: 80vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column; */
+}
+
+.title{
+    font-size: 25px;
+    font-weight: 600;
+    padding: 16px 170px;
+    padding-left: 266px;
+}
+
+.content form .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+  }
+
+  form .user-details .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+  }
+
+  form .input-box span.details
+{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.user-details .input-box input{
+    height: 46px;
+    width: 350px;
+    outline: none;
+    font-size: 17px;
+    border-radius: 7px;
+    padding-left: 15px;
+    border: 2px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    margin: 11px;
+    margin-left: 170px;
+  }
+
+  .user-details .input-box input:focus,
+.user-details .input-box input:valid{
+  border-color: #9b59b6;}
+
+  .myselect3{
+    width: 350px;
+    height: 46px;
+    border-color: #ccc;
+    align-content: center;
+    font-family: 'Domine', serif;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 7px;
+  margin-top: 4px;
+  border: 2px solid #ccc;
+  margin-left: 170px;
+  font-size: 17px;
+  }
+
+  .myselect2  /* YEAR dropdown*/
+{
+  width: 350px;
+  height: 46px;
+  border-color: #ccc;
+  align-content: center;
+  font-family: 'Domine', serif;
+font-family: 'Poppins', sans-serif;
+border-radius: 7px;
+margin-top: 4px;
+border: 2px solid #ccc;
+font-size: 17px;
+margin-left: 170px;
+}
+
+
+.myselect{     /*DEPARTMENT DROP DOWN */
+    width: 350px;
+    height: 46px;
+    border-color: #ccc;
+    align-content: center;
+    font-family: 'Domine', serif;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 7px;
+  border: 2px solid #ccc;
+  font-size: 17px;
+  margin: 19px;
+  margin-left: 170px;
+    /* border: radius 0px; */
+  }
+
+  .myselect4{
+    width: 350px;
+    height: 46px;
+    border-color: #ccc;
+    align-content: center;
+    font-family: 'Domine', serif;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 7px;
+  margin-top: -1px;
+  border: 2px solid #ccc;
+  margin-left: 170px;
+  font-size: 17px;
+  }
+  
+  /* .text{
+    position: fixed;
+    top: 487px;
+    margin-left: 253px;
+    color: rgb(64 64 64 / 92%);
+    font-size: 19px;
+} */
+
+form .button input{
+        height: 46px;
+        width: 509px;
+        border-radius: 5px;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        position: fixed;
+        font-weight: 500;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        margin-left: 96px;
+        top: 516px;
+    }
+
+    .line
+    {
+      color: rgb(255 255 255);
+    font-weight: bold;
+    top: 34px;
+    position: fixed;
+    margin-left: 619px;
+    }
+                </style>
+            </form>
+        </div>
+    </div>
+   </form> 
+   <script>
+
+
+//     function populate(s1,s2)
+//     {
+//         var s1=document.getElementById(s1);
+//         var s2=document.getElementById(s2);
+
+//         s2.innerHTML="";
+//         if(s1.value=="first")
+//         {
+// var optionArray=["first|first","second|second"];
+//         }
+//         for(var option in optionArray)
+//         {
+//             var pair=optionArray[option].split("");
+//             var newOption=document.createElement("option");
+//             newOption.value=pair[0];
+//             newOption.innerHTML=pair[1];
+//             s2.option.add(newOption);
+//         }
+//     }
+
+
+//    dynamically changing the list elements 
+function semester_changing()
+{
+    if(select1.value=="FY")
+    {
+        temp= "<option disabled selected>select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 1 </option> <br>"+"<option> 2 </option> <br>";
+                        document.getElementById("select2").innerHTML=temp;
+    }
+
+    if(select1.value=="SY")
+    {
+        temp= "<option disabled selected>select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 3</option> <br>"+"<option> 4 </option> <br>";
+                        document.getElementById("select2").innerHTML=temp;
+    }
+
+    if(select1.value=="TY")
+    {
+        temp= "<option disabled selected>select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 5 </option> <br>"+"<option> 6 </option> <br>";
+                        document.getElementById("select2").innerHTML=temp;
+    }
+}
+   </script>
+</body>
+</head>
+</html>

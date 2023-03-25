@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 // const student_model = require("../model/student_schema")
 const helper = require("../middleware/Helper")
+const student_schema = require("../model/student_schema");
+const mongoose = require("mongoose");
 
 
 
@@ -21,14 +23,16 @@ async function student_register(req,resp,next)
         phone_number:req.body.stud_phone,
     })
 
+    // const student_attendance_model = new mongoose.model("TYCO1",student_schema)
     // console.log(req.body.stud_roll);
     const status = await student_reg_data.save();
     console.log(status)
-    resp.render("login")
+    resp.render("login",{msg:"Registered Successfully, Please Login to Verify"})
     console.log("Student Registered Successfully");
     }
     catch(e)
     {
+        resp.render("register_student",{error:"Roll No. OR Phone number OR Password is already present"})
         console.log(e)
     }
 }
@@ -44,7 +48,7 @@ async function student_login_verify(req,resp,next)
 
         if(verify_roll.length == 0)
         {
-            return resp.status(404).send("ID Not Found")
+            return resp.render("login",{msg:"ID not found"})
         }
 
         const verify_password = await student.student_register_model.find({roll_no:roll}).select({password:1,year:1,discipline:1})
@@ -64,7 +68,7 @@ async function student_login_verify(req,resp,next)
             resp.redirect("./student_menu")
         }
         else{
-            return resp.status(400).send("Incorrect Password");
+            return resp.render("login",{error : "Incorrect Password"})
         }
 
     }catch(e)
