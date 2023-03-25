@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title> Teacher Registration Form </title>
     <link rel="stylesheet" href="style.css">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1000">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  
    </head>
 <body>
   <div class="container">
     <div class="title">Teacher Registration</div>
     <div class="content">
-      <form action="/register_teacher" method="post" id = "teacher_form">
+      <form action="/register_teacher" method="post">
         <div class="user-details">
           <div class="input-box">
             <span class="details"></span> 
@@ -36,6 +38,22 @@
             <span class="details"></span>
             <input type="text" id="confirm password" placeholder="confirm password" required>
           </div>
+          <!-- <div class="input-box">
+            <span class="details"></span>
+            <input type="text" id="phonenumber" placeholder="semester" required oninput="this.value=value.replace(/[^0-9]/g,'');">
+          </div> -->
+          <!-- <div class="input-box">
+            <span class="details"></span>
+            <input type="text" placeholder="enrollment number" required oninput="this.value=value.replace(/[^0-9]/g,'');">
+          </div> -->
+          <!-- <div class="input-box">
+            <span class="details"></span>
+            <input type="text" placeholder="password" required>
+          </div>
+          <div class="input-box">
+            <span class="details"></span>
+            <input type="text" placeholder="confirm password" required>
+          </div> -->
         </div>
         <div class="gender-details">
           <input type="radio" name="gender" id="dot-1">
@@ -54,21 +72,10 @@
     </div>
   </div>
 
-  <% if(locals.e) { %>
-    <!-- <div class="alert alert-danger" role="alert"><%= e %></div> -->
-    <script>
-          let a = '<%=e %>';
-      alert(a);
-    </script>
-    <% } %>
-    
-
 <!--MY SCRIPT-->
   <script>
-
-   function phonevalidate()     
-    { 
-      var form = document.getElementById("teacher_form");
+    function phonevalidate()     
+    {
       phonenumber=document.getElementById("phonenumber").value;
       if(document.getElementById("phonenumber").value=="")
       {
@@ -77,9 +84,9 @@
       if(phonenumber.length<10 || phonenumber.length>10)
       {
         alert("please enter valid phone number")
-      }   
+        
+      }     
   }
-
   </script>
 </body>
 </html>
@@ -105,12 +112,16 @@ body{
 }
 .container{
   max-width: 800px;
-  width: 80%;
+  /* width: 80%; */
   height: 410px;
   background-color: #fff;
   padding: 25px 30px;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  position: relative;
+  align-items: center;
+  align-content: center;
+  
 }
 .container .title{
   font-size: 25px;
@@ -159,10 +170,10 @@ border-radius: 7px;
   font-family: 'Domine', serif;
 font-family: 'Poppins', sans-serif;
 border-radius: 7px;
-  /* border: radius 0px; */
+ 
 }
 
-.myselect3{     /*SEMESTER DROP DOWN */
+.myselect3{   
   width: 350px;
   height: 43px;
   border-color: #ccc;
@@ -170,8 +181,9 @@ border-radius: 7px;
   font-family: 'Domine', serif;
 font-family: 'Poppins', sans-serif;
 border-radius: 7px;
-  /* border: radius 0px; */
+ 
 }
+
 
 form .input-box span.details
 {
@@ -230,16 +242,14 @@ form .input-box span.details
 
  form .button{
   height: 50px;
-   /* height: 45px;
-   margin: 100px 0
-   margin: top 0cm 30px; */
+ 
  }
  form .button input{
    height: 100%;
    width: 100%;
    border-radius: 5px;
    border: none;
-   color: #fff; /* button text color*/
+   color: #fff; 
    font-size: 18px;
    font-weight: 500;
    letter-spacing: 1px;
@@ -248,7 +258,7 @@ form .input-box span.details
    background: linear-gradient(135deg, #71b7e6, #9b59b6);
  }
  form .button input:hover{
-  /* transform: scale(0.99); */
+ 
   background: linear-gradient(-135deg, #71b7e6, #9b59b6);
   }
  @media(max-width: 584px){
@@ -264,22 +274,25 @@ form .user-details .input-box{
   }
   .content form .user-details{
     max-height: 300px;
-    overflow-y: scroll;
+   
   }
   .user-details::-webkit-scrollbar{
     width: 5px;
   }
+
+ 
+  @media(max-width: 500px){
+  .container{
+    width: 82vw;
+    height:auto;
   }
-  @media(max-width: 459px){
-  .container .content .category{
-    flex-direction: column;
+  .container .title{
+    padding: 0px 0px 0px 0px;
+    text-align: center;
   }
+ 
 }
 
+ }
 
-/* @import url('https://fonts.googleapis.com/css2?family=Domine&family=Poppins:wght@500&display=swap');*/
-/*
-font-family: 'Domine', serif;
-font-family: 'Poppins', sans-serif;
-*/
 </style>
