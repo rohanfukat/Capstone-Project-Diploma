@@ -10,6 +10,7 @@
 
    </head>
 <body>
+  <div class="modal">
   <div class="container">
     <div class="title">Student Registration</div>
     <div class="content">
@@ -27,26 +28,26 @@
 <!--This is the department select tag-->
           <div class="input-box">
             <span class="details"></span>
-            <select class="myselect" placeholder="department" required name="stud_dept">
+            <select class="myselect" placeholder="department" required name="stud_dept" id = "dept">
 <!-- <optgroup label="Select your department"></optgroup> -->
-<option class="font_arrange" disabled selected >Select your department</option>
-<option class="font_arrange">CO1</option>
-<option class="font_arrange">CO2</option>
+<option class="font_arrange" disabled selected value="">Select your department</option>
+<option class="font_arrange" value="CO1">CO1</option>
+<option class="font_arrange" value="CO2">CO2</option>
             </select>
           </div>
 
           <div class="input-box">
             <span class="details"></span>
-            <select class="myselect2" placeholder="select your year" required id="select1" onchange="semester_changing()" name="stud_year">
-              <option class="font_arrange" disabled selected>Select your year</option>
-              <option class="font_arrange">FY</option>
-              <option class="font_arrange">SY</option>
-              <option class="font_arrange">TY</option>
+            <select class="myselect2" placeholder="select your year" required id="select1" onchange="semester_changing()" name="stud_year" id="year" > 
+              <option class="font_arrange" disabled selected value="">Select your year</option>
+              <option class="font_arrange" value="FY">FY</option>
+              <option class="font_arrange" value="SY">SY</option>
+              <option class="font_arrange" value="TY">TY</option>
             </select>
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" placeholder="e-mail" required name="email">
+            <input type="text" placeholder="e-mail" required name="email" id="email">
           </div>
           <div class="input-box">
             <span class="details"></span>
@@ -54,8 +55,8 @@
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <select class="myselect3" placeholder="semester" required id="select2" name="stud_sem">
-              <option class="font_arrange" disabled selected>Select your semester</option>
+            <select class="myselect3" placeholder="semester" required id="select2" name="stud_sem" id = "semester">
+              <option class="font_arrange" disabled selected value="">Select your semester</option>
             </select>
           </div>
           <div class="input-box">
@@ -88,7 +89,7 @@
     </div>
   </div>
 
-
+</div>
   
   <% if(locals.unique_error) { %>
     <script>
@@ -101,25 +102,41 @@
   <script>
     function validation()     
     {
-      phonenumber=document.getElementById("phonenumber").value;
-      roll_no = document.getElementById("roll").value;
-      enroll = document.getElementById("enroll").value;
+      // alert("hello");
+      phonenumber=document.getElementById("phonenumber");
+      roll_no = document.getElementById("roll");
+      enroll = document.getElementById("enroll");
       name = document.getElementById("name").value;
-      password = document.getElementById("real_password").value;
-      cpassword = document.getElementById("confirm_password").value;
+      email = document.getElementById("email").value;
+      password = document.getElementById("real_password");
+      cpassword = document.getElementById("confirm_password");
       form1 = document.getElementById("form1");
+      dept = document.getElementById("dept");
+      year = document.getElementById("year");
+      sem = document.getElementById("semester") ;
 
-      if(name.length >5)
+      if(name.length > 5 || name.length!="")
       {
-        if(roll_no.length ==4 & enroll.length ==10 & phonenumber.length ==10)
+        if(email != "")
         {
-          if(password.length >= 1 & (password==cpassword) )
+        if(roll_no.value.length ==4 && enroll.value.length ==10 && phonenumber.value.length ==10)
+        {
+          if(password.value.length >= 4  || password.value!="")
           {
-            form1.submit()
-            // alert("hello")
+            if(password.value==cpassword.value)
+            {
+              // if(dept.value=="" || year.value == "" || sem.value=="")
+              // {
+                form1.submit()
+              // }
+              // else{alert("Please select options from drop-down box")}
+            }
+            else{ alert ( "Password and Confirm password doesn't match")}
+            
           }
-          else{alert("Real password and confirm password not match")}
+          else{alert("Password must be greater than 4")}
         }else{alert("Please Enter valid number field")}
+      }else{alert ("Please fill the email field")}
       }else{alert("Please Enter valid name")}
   }
 
@@ -127,19 +144,19 @@
   {
     if(select1.value=="FY")
     {
-        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 1 </option> <br>"+"<option> 2 </option> <br>";
+        temp= "<option disabled selected>Select your semester</option>"+"<option value='1'> 1 </option> <br>"+"<option value='2'> 2 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
 
     if(select1.value=="SY")
     {
-        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 3 </option> <br>"+"<option> 4 </option> <br>";
+        temp= "<option disabled selected>Select your semester</option>"+"<option value='3'> 3 </option> <br>"+"<option vlaue='4'> 4 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
 
     if(select1.value=="TY")
     {
-        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 5 </option> <br>"+"<option> 6 </option> <br>";
+        temp= "<option disabled selected>Select your semester</option>"+"<option value='5'> 5 </option> <br>"+"<option value='6'> 6 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
   }
@@ -166,9 +183,12 @@ body{
   background: linear-gradient(135deg, #50a7e1, #d433d2);
 
 }
+.modal{
+  zoom:355%;
+}
 .container{
   max-width: 800px;
-  width: 80%;
+  /* width: 80%; */
   height: 500px;
   background-color: #fff;
   padding: 25px 30px;
@@ -177,7 +197,7 @@ body{
 }
 
 .font_arrange{
-  font-size: 0.8vw;
+  font-size: 0.3vw;
 }
 .container .title{
   font-size: 25px;
@@ -198,7 +218,7 @@ form .user-details .input-box{
 }
 
 .myselect{     /*DEPARTMENT DROP DOWN */
-  width: 350px;
+  width: 100%;
   height: 43px;
   border-color: #ccc;
   align-content: center;
@@ -209,7 +229,7 @@ border-radius: 7px;
 }
 
 .myselect2{     /*YEAR DROP DOWN */
-  width: 350px;
+  width: 100%;
   height: 43px;
   border-color: #ccc;
   align-content: center;
@@ -220,7 +240,7 @@ border-radius: 7px;
 }
 
 .myselect3{     /*SEMESTER DROP DOWN */
-  width: 350px;
+  width: 100%;
   height: 43px;
   border-color: #ccc;
   align-content: center;
@@ -337,11 +357,30 @@ form .user-details .input-box{
     container .title {
     font-size: 21px !important;
     padding: none;
+
    
 }
 .font_arrange{
     font-size: 3vw;
 }
+
+.myselect2{     /*YEAR DROP DOWN */
+  width: 100%;
+  
+}
+
+.myselect3{     /*SEMESTER DROP DOWN */
+  width: 100%;
+  
+}
+.myselect{     /*DEPARTMENT DROP DOWN */
+  width: 100%;
+  
+}
+.modal{
+  zoom:0% !important;
+}
+
 }
 
 

@@ -337,11 +337,18 @@ async function verify_Otp_stud(req,resp,next)
     // console.log(status);
 
     console.log(typeof(student_data));
+    // console.log(data);
     data = student_data.split(":")
     data = data.toString();
     data = data.split(",")
     data = data.toString();
     data = data.split("'");
+
+    //phone comes in string on 14 index so splitting it again!!
+//   console.log(data[14]);
+  phone = data[14].toString();
+  phone = phone.split(",");
+  console.log(phone[2]);
 
     const macAddress = Object.values(os.networkInterfaces())
     .flat()
@@ -349,7 +356,8 @@ async function verify_Otp_stud(req,resp,next)
     .map(iface => iface.mac)
     .shift();
     
-    console.log(data);
+    // for (let i = 0 ; i<data.length ; i++)
+    // {console.log(data[i]+"\n")}
 
     try{
         const student_reg_data = new student.student_register_model({
@@ -361,7 +369,7 @@ async function verify_Otp_stud(req,resp,next)
             discipline:data[11],
             semester:data[13],
             // token:"lsjdfl",
-            phone_number:data[15],
+            phone_number:phone[2],
             mac_address:macAddress
         })
 

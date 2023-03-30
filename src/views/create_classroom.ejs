@@ -17,7 +17,7 @@
         <ul class="menu" >
           <li id="one" onclick="chnage(this)"><a href="/teacher_student_details"><b id="one" class="b">Students Details</b></a></li>
           <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Create QR</b></a></li>
-          <li id="two" onclick="chnage(this)"><a href="/create_classroom"><b class="b">Classroom</b></a> </li>
+          <li id="two" onclick="chnage(this)"><a href="/classroom_attendance"><b class="b">Classroom</b></a> </li>
           <li id="three" onclick="chnage(this)""><a href="/logout_teacher"><b class="b" id="three">Logout</b></a></li>
         </ul>
       </nav>
@@ -39,7 +39,7 @@
               </div>
               <div>
                 <select class="myselect2" class="font_s" required id="select1" name="select1" onchange="semester_changing()">
-                  <option disabled selected class="font_s">Select your year</option>
+                  <option disabled selected class="font_s" value="">Select your year</option>
                   <option value="FY" class="font_s">FY</option>
                   <option value="SY" class="font_s">SY</option>
                   <option value="TY" class="font_s">TY</option>
@@ -47,31 +47,61 @@
               </div>
               <div>
                 <select class="myselect3" required id="select2" name="select2">
-                  <option disabled selected class="font_s"> Select your semester</option>
+                  <option disabled selected class="font_s" value=""> Select your semester</option>
                  
                 </select>
               </div>
               <div>
-                <select class="myselect" required name = "discipline">
-                  <option disabled selected class="font_s">Select your discipline</option>
+                <select class="myselect" required name = "discipline" id="disp">
+                  <option disabled selected class="font_s" value="">Select your discipline</option>
                   <option class="font_s">CO1</option>
                   <option class="font_s">CO2</option>
                 </select>
               </div>
               <div>
                 <select class="myselect4" placeholder="select your subject" required id="select4" name = "subject">
-                   <option disabled selected>Select your subject</option>
+                   <option disabled selected value="">Select your subject</option>
                   
                 </select>
               </div>
               <div class="button">
-                <input type="submit" value="Create" onclick="">
+                <input type="button" value="Create" onclick="validate()">
               </div>
             </form>
           </div>
 
         </div>
   </form>
+
+<script>
+function validate()
+{
+  subject = document.getElementById("select4");
+  discipline = document.getElementById("disp");
+  year = document.getElementById("select1");
+  semester =document.getElementById("select2");
+  form = document.getElementById("forme");
+
+  if(year.value!="")
+  {
+      if(semester.value!="")
+      {
+          if(discipline.value!="")
+          {
+              if(subject.value!="")
+              {
+                  form.submit();
+              }
+              else{ alert("Please select the subject"); }
+          }
+          else{  alert("Please select the discipline"); }
+          
+      }
+      else{ alert("Please select the semester")}
+  }
+  else{ alert("Please select the year"); }
+}
+  </script>
 
   <% if(locals.success) { %>
     <script>
@@ -585,7 +615,7 @@ form .button input {
 {
     if(select1.value=="FY")
     {
-        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option></option"+"<option value='1'> 1 </option> <br>"+"<option value= '2'> 2 </option> <br>";
+        temp= "<option disabled selected value=''>Select your semester</option>"+"<option value='1'> 1 </option> <br>"+"<option value= '2'> 2 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
 
@@ -605,13 +635,13 @@ form .button input {
     // FIRST YEAR SUBJECT SELECTION 
     if(select1.value=="FY")
     {
-        temp= "<option disabled selected>Select your subject</option>"+"<option></option>"+
-        "<option disabled>first semester subjects</option>"+
-        "<option value=' '></option"+"<option> ENG </option> <br>"+
+        temp= "<option disabled selected value=''>Select your subject</option>"+"<option></option>"+
+        "<option disabled value=''>first semester subjects</option>"+
+        "<option value=''></option"+"<option> ENG </option> <br>"+
         "<option> BSC(PHY) </option> <br>"+"<option> BSC(CHEM) </option> <br>"
         +"<option> BMS </option> <br>"+"<option> ICT </option> <br>"+"<option> EGE </option> <br>"
-        +"<option> WPC </option> <br>"+"<option>  </option> <br>"+
-        "<option disabled> second semester subjects </option> <br>"+
+        +"<option> WPC </option> <br>"+"<option value=''>  </option> <br>"+
+        "<option disabled value=''> second semester subjects </option> <br>"+
         "<option> EEC </option> <br>"+"<option> AMI </option> <br>"+
         "<option> BEC </option> <br>"+"<option> PIC </option> <br>"+
         "<option> BCC </option> <br>"+"<option> CPH </option> <br>"+"<option> WPD </option> <br>";
@@ -622,14 +652,14 @@ form .button input {
     //SECOND YEAR SUBJECT SELECTION 
     if(select1.value=="SY")
     {
-        temp= "<option disabled selected>Select your subject</option>"+"<option></option>"+"<option disabled>third semester subjects</option>"+"<option value=' '></option"+"<option> OOP </option> <br>"+"<option> DSU </option> <br>"+"<option> CGR </option> <br>"+"<option> DMS </option> <br>"+"<option> DTE </option> <br>"+"<option>  </option> <br>"+"<option disabled> fourth semester subjects </option> <br>"+"<option> JPR </option> <br>"+"<option> SEN </option> <br>"+"<option> DCC </option> <br>"+"<option> MIC </option> <br>"+"<option> GAD </option> <br>";
+        temp= "<option disabled selected value=''>Select your subject</option>"+"<option disabled>third semester subjects</option>"+"<option value=''></option>"+"<option> OOP </option> <br>"+"<option> DSU </option> <br>"+"<option> CGR </option> <br>"+"<option> DMS </option> <br>"+"<option> DTE </option> <br>"+"<option>  </option> <br>"+"<option disabled> fourth semester subjects </option> <br>"+"<option> JPR </option> <br>"+"<option> SEN </option> <br>"+"<option> DCC </option> <br>"+"<option> MIC </option> <br>"+"<option> GAD </option> <br>";
                         document.getElementById("select4").innerHTML=temp;
     }
 
     //THIRD YEAR SUBJECT SELECTION 
     if(select1.value=="TY")
     {
-        temp= "<option disabled selected>Select your subject</option>"+"<option></option>"+"<option disabled>fifth semester subjects</option>"+"<option value=' '></option"+"<option> EST </option> <br>"+"<option> OSY </option> <br>"+"<option> AJP </option> <br>"+"<option> STE </option> <br>"+"<option> CSS </option> <br>"+"<option>  </option> <br>"+"<option disabled> sixth semester subjects </option> <br>"+"<option> MGT </option> <br>"+"<option> PWP </option> <br>"+"<option> MAD </option> <br>"+"<option> ETI </option> <br>"+"<option> WBP </option> <br>"+"<option> EDE </option> <br>";
+        temp= "<option disabled selected value=''>Select your subject</option>"+"<option disabled value=''>fifth semester subjects</option>"+"<option value=' '></option"+"<option> EST </option> <br>"+"<option> OSY </option> <br>"+"<option> AJP </option> <br>"+"<option> STE </option> <br>"+"<option> CSS </option> <br>"+"<option>  </option> <br>"+"<option disabled> sixth semester subjects </option> <br>"+"<option> MGT </option> <br>"+"<option> PWP </option> <br>"+"<option> MAD </option> <br>"+"<option> ETI </option> <br>"+"<option> WBP </option> <br>"+"<option> EDE </option> <br>";
                         document.getElementById("select4").innerHTML=temp;
     }
 }

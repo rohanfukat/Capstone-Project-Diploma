@@ -270,6 +270,7 @@ async function InfoDetails(req,resp)
 
 async function allDetails(req,resp)
 {
+    try{
     const subject= req.body.subject;
     const year = req.body.year;
     const discipline = req.body.discipline;
@@ -287,6 +288,12 @@ async function allDetails(req,resp)
     const dates = teach_data[0].create_qr_dates
 
     resp.render("all_student_attendance",{stud_data:stud_data,dates:dates,dept:year+discipline,subject:subject})
+    }
+    catch(e)
+    {
+        resp.render("all_student_attendance",{error_msg:"Data not found"})
+        console.log(e)
+    }
 
 
 }

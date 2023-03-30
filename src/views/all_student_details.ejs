@@ -31,8 +31,8 @@
                     <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Students Details</b></a></li> 
                     <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Create
                                 QR</b></a></li> 
-                    <li id="two" onclick="chnage(this)"><a href="/create_classroom"><b class="b">Classroom </b></a> </li>
-                    <li id="three" onclick="chnage(this)""><a href=" #"><b class="b" id="three">Logout</b></a></li>
+                    <li id="two" onclick="chnage(this)"><a href="/classroom_attendance"><b class="b">Classroom </b></a> </li>
+                    <li id="three" onclick="chnage(this)""><a href="/logout_teacher"><b class="b" id="three">Logout</b></a></li>
                 </ul>
             </nav>
         </header>
@@ -42,20 +42,21 @@
                 <table border ="2"colspan class="align_table">
                     <tr>
                         <td class="head">
-                            Roll_No
+                          <b>  Roll_No</b>
                         </td>
                         <td class="head">
-                            Name
+                           <b> Name</b>
                         </td>
                         <td class="head">
-                            password
+                          <b>  password</b>
                         </td>
                         <td class="head">
-                           (NIC) MAC Address
+                           <b>(NIC) MAC Address</b>
                         </td>
                     </tr>
-                    <tr>
+                    
                         <% for(var a = 0 ; a < student_data.length ; a++) { %>
+                           <tr>
                             <td>
                                 <%= student_data[a].roll_no %>
                             </td>
@@ -68,14 +69,20 @@
                             <td>
                                 <%= student_data[a].mac_address %>
                             </td>
+                        </tr>
                             <% } %>
                         
-                    </tr>
+                    
                 </table>    
                 </div>
         </div>
     </form>
-
+    <% if(locals.error) { %>
+        <script>
+              let error = '<%= error %>';
+          alert(error);
+        </script>
+        <% } %>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
@@ -85,12 +92,18 @@
       .head{
         font-size: 2.5vh;
         font-size: bold;
+        background:wheat;
       }
       .align_table{
-        width:50vw;
+        width:80vw;
         height: auto;
         font-size: 2vh;
+        margin-top:5vh;
+        margin-left:2vw;
         background-color: white;
+      }
+      td{
+        padding:30px;
       }
 
         #my {
@@ -373,21 +386,8 @@
                 border-radius: 13px;
                 margin-top: 5vh;
             }
-
-            p2 {
-                font-size: 7vw !important;
-            }
-
-            p3 {
-                font-size: 6vw !important;
-                margin-top: 2vh !important;
-            }
-
-            p4 {
-                font-size: 5.5vw !important;
-            }
-
-
+           
+           
             .headdescp {
                 width: 54vw !important;
                 height: 28vh !important;
@@ -398,14 +398,55 @@
                 height: 60px;
                 margin-left: 80vw;
             }
+            .table{
+                width:70vw !important;
+                height:auto;    
+            }
+            .align_table{
+                width:70vw !important;
+                height:auto;  
+                font-size:2vh !important;
+
+            }
+            td{
+                padding:2px !important;
+                padding-left: 5px !important;
+            }
+            .head{
+                font-size: 2.3vh !important;
+                text-align: center;
+            }
          
 
         }
 
+        @media (max-width:500px)
+        {
+            .table{
+                width:70vw !important;
+                height:auto;    
+            }
+            div .align_table{
+                width:70vw !important;
+                height:auto;  
+                font-size:2vh !important;
+
+            }
+            td{
+                padding:2px !important;
+                padding-left: 5px !important;
+                font-size: 3vw !important;
+            }
+            .head{
+                font-size: 2vh !important;
+                text-align: center;
+            }
+          
+        }
         .main {
             width: 100%;
             height: 100%;
-            text-align: center;
+            text-align: left;
         }
 
         .headdescp {

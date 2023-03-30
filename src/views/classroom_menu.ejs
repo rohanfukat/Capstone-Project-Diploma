@@ -17,7 +17,7 @@
                     <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Students Details</b></a></li> 
                     <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Create
                                 QR</b></a></li> 
-                    <li id="two" onclick="chnage(this)"><a href="/create_classroom"><b class="b">Classroom </b></a> </li>
+                    <li id="two" onclick="chnage(this)"><a href="/classroom_attendance"><b class="b">Classroom </b></a> </li>
                     <li id="three" onclick="chnage(this)""><a href=" #"><b class="b" id="three">Logout</b></a></li>
                 </ul>
             </nav>
@@ -28,7 +28,7 @@
                     <form action = "/all_student_attendance" method="post">
                         <div class="item" id="div1">
                             <div class="headsub">
-                                <input type="text" value="<%= teach_data[0].subject %>" name="subject">
+                             <b>   <input type="text" value="<%= teach_data[0].subject %>" name="subject"></b>
                             </div>
                             <div class="headdescp" id="hidden">
                                 <p3>Year :&nbsp; </p3>
@@ -45,7 +45,7 @@
                         <form action = "/all_student_attendance" method="post">
                         <div class="item" >
                             <div class="headsub">
-                                <input type="text" value="<%= teach_data[i].subject %>" name="subject" class="subject_head" readonly>
+                              <b>  <input type="text" value="<%= teach_data[i].subject %>" name="subject" class="subject_head" readonly></b>
                             </div>
                             <div class="headdescp">
                                 <p3>Year :&nbsp; </p3>
@@ -63,11 +63,19 @@
                 </div>
             </div>
             <div class="add_button">
-                <input type="submit" value="+" id="bt1">
+            <input type="button" value="+" id="bt1" onclick="redirect()">
             </div>
         </div>
     </form>
 
+    <script>
+        function redirect()
+        {
+            add = document.getElementById("redirect");
+            window.location.href="/create_classroom";
+            
+        }
+    </script>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
@@ -395,8 +403,30 @@
             p4 {
                 font-size: 5.5vw !important;
             }
+            .subject_head{
+                font-size: 4.5vw !important;
+            }
+            .textfield_format {
+    background: transparent;
+    font-size: 5vw !important;
+    color: #070912b2;
+    size: 16px !important;
+    width: 10vw !important;
+    border: none;
+    /* display: none; */
+}
 
-
+            .viewbtn_style {
+    width: 24vw !important;
+    height: 3vh !important;
+    font-size: 4vw !important;
+    margin-top: 1vh !important;
+    margin-left: 26vw !important;
+    display: block;
+    background: whitesmoke;
+    border-radius: 40px;
+    box-shadow: 6px 7px gray;
+}
             .headdescp {
                 width: 54vw !important;
                 height: 28vh !important;
@@ -467,7 +497,7 @@
             color: #070912b2;
 
         }
-
+        
 
 
 

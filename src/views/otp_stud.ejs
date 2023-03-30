@@ -15,7 +15,7 @@
                     Enter the code below to confirm your phone number
                 </p>
                 <input type = "text" name = "ph_no" hidden="true" value = "<%= no %>"  >
-                <textarea name="teacher_data" hidden><%=teacher_data %> </textarea>
+                <textarea name="teacher_data" hidden style="width:298px;height: 199px;"><%=teacher_data %> </textarea>
                 <!-- <div>
                     <%= teacher_data %>
                 </div> -->
@@ -76,6 +76,7 @@ body{
     padding: 30px;
     max-width: 1000px;
     text-align: center;
+    zoom:355%;
 }
 
 .code-container{
@@ -105,9 +106,16 @@ body{
     }
     .code{
         font-size: 24px;
-        height: 50px;
-        max-width: 50px;
+        height: 46px;
+        max-width: 28px;
         font-size: bold;
+    }
+    .btn{
+        min-width:70vw !important;
+    }
+    .container{
+        zoom:0% !important;
+        width:95vw;
     }
 }
 
