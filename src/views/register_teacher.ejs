@@ -38,22 +38,6 @@
             <span class="details"></span>
             <input type="text" id="confirm password" placeholder="confirm password" required>
           </div>
-          <!-- <div class="input-box">
-            <span class="details"></span>
-            <input type="text" id="phonenumber" placeholder="semester" required oninput="this.value=value.replace(/[^0-9]/g,'');">
-          </div> -->
-          <!-- <div class="input-box">
-            <span class="details"></span>
-            <input type="text" placeholder="enrollment number" required oninput="this.value=value.replace(/[^0-9]/g,'');">
-          </div> -->
-          <!-- <div class="input-box">
-            <span class="details"></span>
-            <input type="text" placeholder="password" required>
-          </div>
-          <div class="input-box">
-            <span class="details"></span>
-            <input type="text" placeholder="confirm password" required>
-          </div> -->
         </div>
         <div class="gender-details">
           <input type="radio" name="gender" id="dot-1">
@@ -116,7 +100,7 @@ body{
   height: 410px;
   background-color: #fff;
   padding: 25px 30px;
-  border-radius: 5px;
+  border-radius: 30px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
   position: relative;
   align-items: center;
@@ -254,6 +238,7 @@ form .input-box span.details
    font-weight: 500;
    letter-spacing: 1px;
    cursor: pointer;
+   /* margin-top: 8vh; */
    transition: all 0.3s ease;
    background: linear-gradient(135deg, #71b7e6, #9b59b6);
  }
@@ -263,7 +248,9 @@ form .input-box span.details
   }
  @media(max-width: 584px){
  .container{
-  max-width: 100%;
+  width: 82vw;
+    height: 62vh;
+    border-radius: 42px;
 }
 form .user-details .input-box{
     margin-bottom: 15px;
@@ -279,12 +266,21 @@ form .user-details .input-box{
   .user-details::-webkit-scrollbar{
     width: 5px;
   }
+  form .button input{
+    margin-top: 8vh !important;
+  }
+}
 
- 
+ @media (max-width:380px){
+   .container{
+    height: 88vh !important;
+  }
+ }
   @media(max-width: 500px){
   .container{
     width: 82vw;
-    height:auto;
+    height: 69vh;
+    border-radius: 42px;
   }
   .container .title{
     padding: 0px 0px 0px 0px;
@@ -293,6 +289,5 @@ form .user-details .input-box{
  
 }
 
- }
-
+ 
 </style>

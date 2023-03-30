@@ -74,6 +74,13 @@
     </div>
 
 
+    <% if(locals.s) { %>
+        <script>
+              let sucess = '<%=s%>';
+          alert(sucess);
+        </script>
+        <% } %>
+        
     <% if(locals.msg) { %>
         <script>
               let msg = '<%=msg %>';
@@ -88,6 +95,34 @@
         </script>
         <% } %>
 
+
+        <% if(locals.unauthorize) { %>
+            <script>
+                  let unauthorize = '<%= unauthorize %>';
+              alert(unauthorize);
+            </script>
+            <% } %>
+
+            <% if(locals.logout_teacher) { %>
+                <script>
+                      let logout_teacher = '<%= logout_teacher %>';
+                  alert(logout_teacher);
+                </script>
+                <% } %>
+
+                <% if(locals.logout_student) { %>
+                    <script>
+                          let logout_student = '<%= logout_student %>';
+                      alert(logout_student);
+                    </script>
+                    <% } %>
+
+                    <% if(locals.not_device) { %>
+                        <script>
+                              let not_device = '<%= not_device %>';
+                          alert(not_device);
+                        </script>
+                        <% } %>
         
 
 

@@ -1,0 +1,44 @@
+<h1><%= dept %></h1>
+<%- stud_data[0][subject][1]%>
+<style>
+    table,th,td{
+        border:1px solid black;
+        border-collapse: collapse;
+    }
+
+    th,td{
+        padding:10px;
+        text-align:left;
+    }
+</style>
+<table border="1" colspan>
+<tr>
+    <td>
+       Roll_No
+    </td>
+    <% for(let i = 0 ; i < dates.length ; i++) { %>
+        <td>
+            <%= dates[i] %>
+        </td>
+    <%}%>
+</tr>
+<% for (let d = 0 ; d < stud_data.length ; d++) {%>
+    <tr>
+        <td>
+            <%- stud_data[d].roll_no %>
+        </td>
+       <% for (let a = 0 ; a < dates.length ; a++ ) { %>
+          <% if(stud_data[d][subject][a]==dates[a]) { %>
+                <td>
+                    P
+                </td>
+           <% } else { %>
+                <td>
+                  <b>  A</b>
+                </td>
+          <%  } %>
+
+        <% } %>
+    </tr> 
+    <%} %>
+</table>

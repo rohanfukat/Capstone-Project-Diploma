@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon src/index.js  ejs",
+    "start": "node src/index.js "
   },
   "author": "Rohan, Vedant",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.10.0",
     "qrcode": "^1.5.1",
-    "randomstring": "^1.2.3"
+    "randomstring": "^1.2.3",
+    "twilio": "^4.9.0"
   }
 }

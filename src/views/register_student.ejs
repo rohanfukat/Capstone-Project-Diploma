@@ -2,77 +2,73 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title> Registration Form </title>
+    <title> Student Registration Form </title>
     <link rel="stylesheet" href="style.css">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
    </head>
 <body>
-  <!-- <form action="/student_register" method="post"> -->
   <div class="container">
     <div class="title">Student Registration</div>
     <div class="content">
-      <form action="/student_register" method="post">
+      <form action="/student_register" method="post" id="form1">
         <div class="user-details">
           <div class="input-box">
             <span class="details"></span> 
-            <input type="text" placeholder="name" name="stud_name" required>
+            <input type="text" placeholder="name" required name="stud_name" id="name">
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" placeholder="rollno" name="stud_roll" required oninput="this.value=value.replace(/[^0-9]/g,'');">
+            <input type="text" placeholder="rollno" required oninput="this.value=value.replace(/[^0-9]/g,'');" name="stud_roll" id="roll">
           </div>
 
 <!--This is the department select tag-->
           <div class="input-box">
             <span class="details"></span>
-            <select class="myselect" name="stud_dept" placeholder="department" required>
+            <select class="myselect" placeholder="department" required name="stud_dept">
 <!-- <optgroup label="Select your department"></optgroup> -->
-<option disabled selected class="t1"> &nbsp;&nbsp; Select your department </option>
-<option class="t1">CO1</option>
-<option class="t1">CO2</option>
+<option class="font_arrange" disabled selected >Select your department</option>
+<option class="font_arrange">CO1</option>
+<option class="font_arrange">CO2</option>
             </select>
           </div>
 
           <div class="input-box">
             <span class="details"></span>
-            <select class="myselect2" placeholder="select your year" name="stud_year" required>
-              <option disabled selected class = "t1">&nbsp;&nbsp;Select your year</option>
-              <option class="t1">FY</option>
-              <option class="t1">SY</option>
-              <option class="t1">TY</option>
+            <select class="myselect2" placeholder="select your year" required id="select1" onchange="semester_changing()" name="stud_year">
+              <option class="font_arrange" disabled selected>Select your year</option>
+              <option class="font_arrange">FY</option>
+              <option class="font_arrange">SY</option>
+              <option class="font_arrange">TY</option>
             </select>
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" placeholder="e-mail" name="stud_email" required>
+            <input type="text" placeholder="e-mail" required name="email">
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" id="phonenumber" placeholder="phone number" name="stud_phone" required oninput="this.value=value.replace(/[^0-9]/g,'');">
+            <input type="text" id="phonenumber" placeholder="phone number" required oninput="this.value=value.replace(/[^0-9]/g,'');" name="stud_phone" id="phone_number">
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <select class="myselect3" placeholder="semester" name="stud_sem" required class = "t1">
-              <option disabled selected class = "t1">&nbsp;&nbsp;Select your semester</option>
-              <option class="t1">1</option>
-              <option class="t1">2</option>
-              <option class="t1">3</option>
-              <option class="t1">4</option>
-              <option class="t1">5</option>
-              <option class="t1">6 </option>
+            <select class="myselect3" placeholder="semester" required id="select2" name="stud_sem">
+              <option class="font_arrange" disabled selected>Select your semester</option>
             </select>
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" placeholder="enrollment number" name="stud_enroll" required oninput="this.value=value.replace(/[^0-9]/g,'');">
+            <input type="text" placeholder="enrollment number" required oninput="this.value=value.replace(/[^0-9]/g,'');" id="enroll">
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" placeholder="password" name="stud_pass" required>
+            <input type="text" placeholder="password" required name="stud_pass" id="real_password">
           </div>
           <div class="input-box">
             <span class="details"></span>
-            <input type="text" placeholder="confirm password" required>
+            <input type="text" placeholder="confirm password" required id="confirm_password">
           </div>
         </div>
         <div class="gender-details">
@@ -86,43 +82,66 @@
           </div>
         </div>
         <div class="button">
-          <!-- <input type="submit" value="Register" onclick="phonevalidate()"> -->
-          <input type="submit" value="Register" onclick="phonevalidate()">
+          <input type="button" value="Register" onclick="validation()">
         </div>
       </form>
     </div>
   </div>
-  
 
-    <% if(locals.msg) { %>
-    <!-- <div class="alert alert-danger" role="alert"><%= msg %></div> -->
+
+  
+  <% if(locals.unique_error) { %>
     <script>
-          let a = '<%=msg %>';
-      alert(a);
+          let error = '<%=unique_error %>';
+      alert(error);
     </script>
     <% } %>
 
-    <% if(locals.error) { %>
-      <script>
-            let duplicate = '<%=error %>';
-        alert(duplicate);
-      </script>
-      <% } %>
-
 <!--MY SCRIPT-->
   <script>
-    function phonevalidate()     
+    function validation()     
     {
       phonenumber=document.getElementById("phonenumber").value;
-      if(document.getElementById("phonenumber").value=="")
+      roll_no = document.getElementById("roll").value;
+      enroll = document.getElementById("enroll").value;
+      name = document.getElementById("name").value;
+      password = document.getElementById("real_password").value;
+      cpassword = document.getElementById("confirm_password").value;
+      form1 = document.getElementById("form1");
+
+      if(name.length >5)
       {
-        alert("please enter the details")
-      }
-      if(phonenumber.length<10 || phonenumber.length>10)
-      {
-        alert("please enter valid phone number")     
-      }  
-      
+        if(roll_no.length ==4 & enroll.length ==10 & phonenumber.length ==10)
+        {
+          if(password.length >= 1 & (password==cpassword) )
+          {
+            form1.submit()
+            // alert("hello")
+          }
+          else{alert("Real password and confirm password not match")}
+        }else{alert("Please Enter valid number field")}
+      }else{alert("Please Enter valid name")}
+  }
+
+  function semester_changing()
+  {
+    if(select1.value=="FY")
+    {
+        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 1 </option> <br>"+"<option> 2 </option> <br>";
+                        document.getElementById("select2").innerHTML=temp;
+    }
+
+    if(select1.value=="SY")
+    {
+        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 3 </option> <br>"+"<option> 4 </option> <br>";
+                        document.getElementById("select2").innerHTML=temp;
+    }
+
+    if(select1.value=="TY")
+    {
+        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option> 5 </option> <br>"+"<option> 6 </option> <br>";
+                        document.getElementById("select2").innerHTML=temp;
+    }
   }
   </script>
 </body>
@@ -137,10 +156,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins',sans-serif;
-}
-.t1{
-  font-size: 1vw;
-  color:black;
 }
 body{
   height: 100vh;
@@ -157,8 +172,12 @@ body{
   height: 500px;
   background-color: #fff;
   padding: 25px 30px;
-  border-radius: 5px;
+  border-radius: 35px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+
+.font_arrange{
+  font-size: 0.8vw;
 }
 .container .title{
   font-size: 25px;
@@ -166,16 +185,6 @@ body{
   /* position:relative; */
   padding: 0px 238px;
 }
-/* .container .title::before{ line below the student registration text
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 30px;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-} */
 
 .content form .user-details{
   display: flex;
@@ -277,10 +286,10 @@ form .input-box span.details
  }
 
  form .button{
+  height: 50px;
    /* height: 45px;
    margin: 100px 0
    margin: top 0cm 30px; */
-   height: 50px;
  }
  form .button input{
    height: 100%;
@@ -293,7 +302,7 @@ form .input-box span.details
    letter-spacing: 1px;
    cursor: pointer;
    transition: all 0.3s ease;
-   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
  }
  form .button input:hover{
   /* transform: scale(0.99); */
@@ -317,11 +326,22 @@ form .user-details .input-box{
   .user-details::-webkit-scrollbar{
     width: 5px;
   }
+   .title {
+    font-size: 21px !important;
+    padding: 0px !important;
+   
+}
   }
-  @media(max-width: 459px){
-  .container .content .category{
-    flex-direction: column;
-  }
+  
+  @media(max-width: 700px){
+    container .title {
+    font-size: 21px !important;
+    padding: none;
+   
+}
+.font_arrange{
+    font-size: 3vw;
+}
 }
 
 

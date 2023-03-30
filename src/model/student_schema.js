@@ -20,18 +20,30 @@ const student_register_schema = new mongoose.Schema({
     phone_number:{
         type:Number,
         unique:true
+    },
+    mac_address:{
+        type:String,
+        unique:true
     }
 })
 
 const student_register_model = new mongoose.model("Student_Register",student_register_schema)
 
 const student_attendance_schema = new mongoose.Schema({
+    name:String,
     roll_no:{
-        type:String
+        type:String,
+        unique:true
     },
     year:String,
     discipline:String,
-    student_attendance:Array,
+    semester:String,
+    PWP:Array,
+    MAD:Array,
+    ETI:Array,
+    MGT:Array,
+    PHP:Array,
+    EDE:Array,
 })
 
 const student_attendance_model = new mongoose.model("Student_Attendance",student_attendance_schema)

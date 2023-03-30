@@ -7,7 +7,8 @@
   
 
 <body id="my">
-  <form id="forme" action="/create_qr" method="post">
+  <form id="forme" action="/teacher_student_details" method="post">
+
     <header class="header">
       <a href="#" class="logo">Teacher</a>
       <input class="side-menu" type="checkbox" id="side-menu" />
@@ -17,8 +18,8 @@
           <li id="one" onclick="chnage(this)"><a href="/teacher_student_details"><b id="one" class="b">Students Details</b></a></li>
           <li id="two" onclick="chnage(this)"><a href="/teacher_menu"><b class="b">Create QR</b></a> </li>
           <li id="three" onclick="chnage(this)""><a href="/create_classroom"><b class="b" id="three">Classroom</b></a></li>
-          <li id="four" onclick="chnage(this)""><a href="/logout_teacher"><b class="b" id="three">Logout</b></a></li>
-        
+          <li id="three" onclick="chnage(this)""><a href="/logout_teacher"><b class="b" id="four">Logout</b></a></li>
+       
         </ul>
       </nav>
     </header>
@@ -26,13 +27,19 @@
       <div class="main">
 
         <div class="modalForm">
-          <div class="title">Create QR</div>
+          <div class="title">Fill Details</div>
           <div class="content">
             <form action="#">
-             
+              <div class="user-details">
+                <div class="input-box">
+                  <span class="details"></span>
+                </div>
+
+              </div>
               <div>
                 <select class="myselect2" class="font_s" required id="select1" name="select1" onchange="semester_changing()">
-                  <option disabled selected class="font_s" value="">Select your year</option>
+                  <option disabled selected class="font_s">Select your year</option>
+                  <option value="" class="font_s"></option>
                   <option value="FY" class="font_s">FY</option>
                   <option value="SY" class="font_s">SY</option>
                   <option value="TY" class="font_s">TY</option>
@@ -40,68 +47,31 @@
               </div>
               <div>
                 <select class="myselect3" required id="select2" name="select2">
-                  <option disabled selected class="font_s" value=""> Select your semester</option>
+                  <option disabled selected class="font_s"> Select your semester</option>
+                  <option value="" class="font_s"></option>
                 </select>
               </div>
               <div>
-                <select class="myselect" required name="discipline" id = "disp">
-                  <option disabled selected class="font_s" value="">Select your discipline</option>
+                <select class="myselect" required name="discipline">
+                  <option disabled selected class="font_s">Select your discipline</option>
                   <option class="font_s" value="CO1">CO1</option>
                   <option class="font_s" value="CO2">CO2</option>
                 </select>
               </div>
               <div>
                 <select class="myselect4" placeholder="select your subject" required id="select4" name="subject">
-                   <option disabled selected value = "">Select your subject</option>
+                   <option disabled selected>Select your subject</option>
+                  <option value="" class="font_s"></option>
                 </select>
               </div>
               <div class="button">
-                <input type="button" value="Create" onclick="validate()">
+                <input type="submit" value="View Attendance" onclick="">
               </div>
             </form>
           </div>
 
         </div>
   </form>
-
-  <script>
-    function validate()
-{
-  subject = document.getElementById("select4");
-  discipline = document.getElementById("disp");
-  year = document.getElementById("select1");
-  semester =document.getElementById("select2");
-  form = document.getElementById("forme");
-
-  if(year.value!="")
-  {
-      if(semester.value!="")
-      {
-          if(discipline.value!="")
-          {
-              if(subject.value="")
-              {
-                  form.submit();
-              }
-              else{ alert("Please select the subject"); }
-          }
-          else{  alert("Please select the discipline"); }
-          
-      }
-      else{ alert("Please select the semester")}
-  }
-  else{ alert("Please select the year"); }
-}
-  </script>
-
-
-
-  <% if(locals.copy) { %>
-    <script>
-          let copy = '<%=copy %>';
-      alert(copy);
-    </script>
-    <% } %>
 
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
@@ -242,8 +212,8 @@
     }
     @media screen and (min-height:741px){
      div .modalForm{
-        height: 58vh !important;
-        margin-top: 15vh !important;
+        height: 60vh !important;
+        
       }
       
     }
@@ -333,7 +303,7 @@ form .button input {
     width: 60vw !important;
     height: 40px !important;
     padding-left: 15px !important;
-    margin-top: 4vh !important;
+    margin-top: 2vh !important;
     font-size: 20px !important;
     /* margin-left: 170px; */
 }
@@ -341,21 +311,21 @@ form .button input {
   width: 60vw !important;
     height: 40px !important;
     padding-left: 15px !important;
-   margin-top: 4vh !important;
+   margin-top: 2vh !important;
     font-size: 20px !important;
 }
 .myselect {
   width: 60vw !important;
     height: 40px !important;
     padding-left: 15px !important;
-    margin-top: 4vh !important;   
+    margin-top: 2vh !important;   
     font-size: 20px !important;
 }
 .myselect4 {
   width: 60vw !important;
     height: 40px !important;
     padding-left: 15px !important;
-    margin-top: 4vh !important;
+    margin-top: 2vh !important;
     font-size: 20px !important;
 }
 form .button input {
@@ -392,7 +362,7 @@ form .button input {
 
       .modalForm {
         width: 79vw !important;
-        height: 70vh !important;
+        height: 78vh !important;
         background-color: #ffffff;
         display: inline-block;
         text-align: center;
@@ -415,7 +385,7 @@ form .button input {
     }
 
     .background_color {
-      /* /setting the background color using the div class after the nav end/ */
+      /*setting the background color using the div class after the nav end*/
       background: linear-gradient(135deg, #71b7e6, #9b59b6);
       height: 100vh;
       width: 100vw;
@@ -481,7 +451,7 @@ form .button input {
       border-radius: 37px;
       padding-left: 15px;
       text-align: center;
-      margin-top: 50px;
+      margin-top: 80px;
       display: inline-block;
       /* margin-left:100px; */
       border: 2px solid black;
@@ -504,7 +474,7 @@ form .button input {
       font-family: 'Domine', serif;
       font-family: 'Poppins', sans-serif;
       border-radius: 37px;
-      margin-top: 2vh;
+      margin-top: 40px;
       display: inline-block;
       border: 2px solid black;
       /* margin-left: 170px; */
@@ -523,7 +493,7 @@ form .button input {
       font-family: 'Domine', serif;
       font-family: 'Poppins', sans-serif;
       border-radius: 37px;
-      margin-top: 2vh;
+      margin-top: 40px;
       display: inline-block;
       border: 2px solid black;
       font-size: 47px;
@@ -544,7 +514,7 @@ form .button input {
       font-size: 47px;
       display: inline-block;
       /* margin: 19px; */
-      margin-top: 2vh;
+      margin-top: 40px;
       /* margin-left: 170px; */
       /* border: radius 0px; */
     }
@@ -557,7 +527,7 @@ form .button input {
       font-family: 'Domine', serif;
       font-family: 'Poppins', sans-serif;
       border-radius: 37px;
-      margin-top: 2vh;
+      margin-top: 40px;
       display: inline-block;
       border: 2px solid black;
       /* margin-left: 170px; */
@@ -580,7 +550,7 @@ form .button input {
       cursor: pointer;
       transition: all 0.3s ease;
       background: linear-gradient(135deg, #71b7e6, #9b59b6);
-      margin-top: 4vh;
+      margin-top: 130px;
       /* top: 516px; */
     }
 
@@ -601,19 +571,19 @@ form .button input {
 {
     if(select1.value=="FY")
     {
-        temp= "<option disabled selected value=''>Select your semester</option>"+"<option value=''></option>"+"<option value=' '></option"+"<option> 1 </option> <br>"+"<option> 2 </option> <br>";
+        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option value='1'> 1 </option> <br>"+"<option value='2'> 2 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
 
     if(select1.value=="SY")
     {
-        temp= "<option disabled selected value=''>Select your semester</option>"+"<option value=''></option>"+"<option value=' '></option"+"<option> 3 </option> <br>"+"<option> 4 </option> <br>";
+        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option value='3'> 3 </option> <br>"+"<option value='4'> 4 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
 
     if(select1.value=="TY")
     {
-        temp= "<option disabled selected value=''>Select your semester</option>"+"<option value=''></option>"+"<option value=' '></option"+"<option> 5 </option> <br>"+"<option> 6 </option> <br>";
+        temp= "<option disabled selected>Select your semester</option>"+"<option></option>"+"<option value=' '></option"+"<option  value='5'> 5 </option> <br>"+"<option value='6'> 6 </option> <br>";
                         document.getElementById("select2").innerHTML=temp;
     }
 
@@ -621,13 +591,13 @@ form .button input {
     // FIRST YEAR SUBJECT SELECTION 
     if(select1.value=="FY")
     {
-        temp= "<option disabled selected value=''>Select your subject</option>"+"<option value=''></option>"+
-        "<option disabled value=''>first semester subjects</option>"+
-        "<option value=''></option>"+"<option> ENG </option> <br>"+
+        temp= "<option disabled selected>Select your subject</option>"+"<option></option>"+
+        "<option disabled>first semester subjects</option>"+
+        "<option value=' '></option"+"<option> ENG </option> <br>"+
         "<option> BSC(PHY) </option> <br>"+"<option> BSC(CHEM) </option> <br>"
         +"<option> BMS </option> <br>"+"<option> ICT </option> <br>"+"<option> EGE </option> <br>"
-        +"<option> WPC </option> <br>"+"<option value=''> </option> <br>"+
-        "<option disabled value=''> second semester subjects </option> <br>"+
+        +"<option> WPC </option> <br>"+"<option>  </option> <br>"+
+        "<option disabled> second semester subjects </option> <br>"+
         "<option> EEC </option> <br>"+"<option> AMI </option> <br>"+
         "<option> BEC </option> <br>"+"<option> PIC </option> <br>"+
         "<option> BCC </option> <br>"+"<option> CPH </option> <br>"+"<option> WPD </option> <br>";
@@ -638,18 +608,17 @@ form .button input {
     //SECOND YEAR SUBJECT SELECTION 
     if(select1.value=="SY")
     {
-        temp= "<option disabled selected value = ''>Select your subject</option>"+"<option value=''></option>"+"<option disabled>third semester subjects</option>"+"<option value=' '></option"+"<option> OOP </option> <br>"+"<option> DSU </option> <br>"+"<option> CGR </option> <br>"+"<option> DMS </option> <br>"+"<option> DTE </option> <br>"+"<option>  </option> <br>"+"<option disabled> fourth semester subjects </option> <br>"+"<option> JPR </option> <br>"+"<option> SEN </option> <br>"+"<option> DCC </option> <br>"+"<option> MIC </option> <br>"+"<option> GAD </option> <br>";
+        temp= "<option disabled selected>Select your subject</option>"+"<option></option>"+"<option disabled>third semester subjects</option>"+"<option value=' '></option"+"<option> OOP </option> <br>"+"<option> DSU </option> <br>"+"<option> CGR </option> <br>"+"<option> DMS </option> <br>"+"<option> DTE </option> <br>"+"<option>  </option> <br>"+"<option disabled> fourth semester subjects </option> <br>"+"<option> JPR </option> <br>"+"<option> SEN </option> <br>"+"<option> DCC </option> <br>"+"<option> MIC </option> <br>"+"<option> GAD </option> <br>";
                         document.getElementById("select4").innerHTML=temp;
     }
 
     //THIRD YEAR SUBJECT SELECTION 
     if(select1.value=="TY")
     {
-        temp= "<option disabled selected>Select your subject</option>"+"<option value=''></option>"+"<option disabled>fifth semester subjects</option>"+"<option value=' '></option"+"<option> EST </option> <br>"+"<option> OSY </option> <br>"+"<option> AJP </option> <br>"+"<option> STE </option> <br>"+"<option> CSS </option> <br>"+"<option>  </option> <br>"+"<option disabled> sixth semester subjects </option> <br>"+"<option> MGT </option> <br>"+"<option> PWP </option> <br>"+"<option> MAD </option> <br>"+"<option> ETI </option> <br>"+"<option> WBP </option> <br>"+"<option> EDE </option> <br>";
+        temp= "<option disabled selected>Select your subject</option>"+"<option></option>"+"<option disabled>fifth semester subjects</option>"+"<option value=' '></option"+"<option> EST </option> <br>"+"<option> OSY </option> <br>"+"<option> AJP </option> <br>"+"<option> STE </option> <br>"+"<option> CSS </option> <br>"+"<option>  </option> <br>"+"<option disabled> sixth semester subjects </option> <br>"+"<option> MGT </option> <br>"+"<option> PWP </option> <br>"+"<option> MAD </option> <br>"+"<option> ETI </option> <br>"+"<option> WBP </option> <br>"+"<option> EDE </option> <br>";
                         document.getElementById("select4").innerHTML=temp;
     }
 }
-
   </script>
 </body>
 </head>

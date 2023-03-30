@@ -1,0 +1,33 @@
+<style>
+    table,th,td{
+        border:1px solid black;
+        border-collapse: collapse;
+    }
+
+    th,td{
+        padding:10px;
+        text-align:left;
+    }
+</style>
+<table border ="2" colspan>
+    <tr>
+        <td>
+            Lecture Dates
+        </td>
+        <td>
+            Status
+        </td>
+    <tr>
+    <% for (var d = 0; d < teacher_date.length; d++) {%>
+        <tr>
+            <td>
+            <%= teacher_date[d]%>
+            </td>
+            <% if (teacher_date[d]==student_date[d]){%>
+                <td>P</td>
+            <%}else{%>
+                <td><b>A</b></td>
+            <%}%>
+        </tr>
+    <% } %>
+</table>

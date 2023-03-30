@@ -20,7 +20,6 @@ const teacher_register_model= new mongoose.model("Teacher_Register",teacher_regi
 const teacher_classroom_schema = new mongoose.Schema({
     uniqueid:{
         type :String,
-        // unique:true  // throwing error of typecasting
     },
     year:String,
     role:String,
@@ -39,4 +38,18 @@ const teacher_classroom_schema = new mongoose.Schema({
 
 const teacher_classroom_model = new mongoose.model("Teacher_classroom",teacher_classroom_schema);
 
-module.exports = {teacher_register_model,teacher_classroom_model};
+
+const otp_Schema = new mongoose.Schema({
+    Phone_Number:Number,
+    otp:Number,
+    createdAt: {
+        type: Date,
+        expires: 300, // set TTL index to 1 hour (in seconds)
+        default: Date.now
+      }
+});
+
+const otp_model = new mongoose.model("Verify_OTP",otp_Schema);
+
+module.exports = {teacher_register_model,teacher_classroom_model,otp_model};
+

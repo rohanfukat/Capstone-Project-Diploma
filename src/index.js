@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
-const port = 7777;
+const port = 7777||3333;
+
 require("./config/dbconnection");
+
 const teacher = require("./middleware/teacher_operation")
 const path = require("path");
 const student = require("./middleware/student_operation")
@@ -44,53 +46,33 @@ app.listen(port,()=>{
 })
 
 
-app.get("/welcome",(req,resp)=>{
+app.get("/",(req,resp)=>{
     resp.render("welcome")
 })
 
-
-app.get("/",(req,resp)=>{
+app.get("/login_pg",(req,resp)=>{
     resp.render("login")
 })
 
-
-// for login redirection
 app.get("/login",[helper.redirect_user],(req,resp)=>{
     resp.render("login");
 })
 
+
 app.post("/login_teacher",teacher.login_teacher_verify,(req,resp,next)=>{
-    resp.redirect("teacher_menu")
+    resp.redirect("teacher_menu.html")
 })
 
-app.get("/create_qr",[teacher.create_qr],(req,resp)=>{
-    
-})
-
-app.get("/get_auth",[helper.authorize_user],(req,resp)=>{
-
-})
-
-// app.get("/",(req,resp)=>{
-//     resp.send("hello");
-// })
-
-// app.get("/student_register",[student.student_create],(req,resp)=>{
-//     resp.send("Student Registered Successfully")
-// })
 
 app.post("/student_login",[student.student_login_verify],(req,resp)=>{
     // resp.send("Student Logged In Successfully")
     // resp.send("cookie");
 })
 
-app.get("/student_menu",(req,resp)=>{
-    resp.render("student_menu")
+app.get("/register_teacher",(req,resp,next)=>{
+    resp.render("register_teacher")
 })
 
-app.get("/teacher_menu",(req,resp)=>{
-    resp.render("teacher_menu")
-})
 
 app.get("/student_register", async(req,resp,err)=>{
     resp.render("register_student");
@@ -99,27 +81,26 @@ app.get("/student_register", async(req,resp,err)=>{
     }
 })
 
-app.post("/student_register",[
-
-    // validate.check('stud_name',"The username should be length 5").exists().length({min:3}),
-
-    body('stud_name').notEmpty().withMessage('Username cannot be empty'),
-    body('stud_name').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),
-    body('stud_phone').isLength({ max: 10 }).withMessage('ph no. 10 digit')
-
-],[student.student_register],async(req,resp)=>{
-    const error = validationResult(req);
-    if(!error.isEmpty())
-    {
-        return resp.render("register_student",{msg:"Please enter valid Details"})
+app.get("/otp_verification",(req,resp,err)=>{
+    try{
+        if(err)
+        {
+            resp.send(err)
+        }
+        else{ resp.render('otp')}
     }
+    catch(e)
+    {
+        console.log(e)
+    }
+
 })
 
-
-
-app.get("/register_teacher",(req,resp,next)=>{
-    resp.render("register_teacher")
+// for teacher otp verification
+app.post("/verify_otp",(req,resp,next)=>{
+    helper.verify_Otp(req,resp,next);
 })
+
 
 app.post("/register_teacher",
 [
@@ -141,18 +122,150 @@ app.post("/register_teacher",
     }
     })
 
-app.post("/create_classroom",[teacher.create_classroom],(req,resp,next)=>{
-    resp.send("Classroom created successfully")
+
+// for student otp verification
+app.post("/verify_otp_stud",(req,resp,next)=>{
+    helper.verify_Otp_stud(req,resp,next);
 })
 
-app.get("/create_classroom",(req,resp)=>{
+app.post("/student_register",[
+
+    // validate.check('stud_name',"The username should be length 5").exists().length({min:3}),
+
+    body('stud_name').notEmpty().withMessage('Username cannot be empty'),
+    body('stud_name').isLength({ min: 5 }).withMessage('Username must be at least 5 characters long'),
+    body('stud_phone').isLength({ max: 10 }).withMessage('ph no. 10 digit')
+
+],[student.student_register],async(req,resp)=>{
+    const error = validationResult(req);
+    if(!error.isEmpty())
+    {
+        return resp.render("register_student",{msg:"Please enter valid Details"})
+    }
+})
+
+
+// TEACHER MENU ROUTES
+
+app.get("/teacher_menu",[helper.authorize_user],(req,resp,next)=>{
+    resp.render("teacher_menu")
+})
+
+// app.get("/teacher_menu",(req,resp)=>{
+//     resp.render("teacher_menu.html")
+// })
+
+
+app.get("/create_qr",[helper.authorize_user],(req,resp,next)=>{
+    resp.render("teacher_menu");
+})
+
+app.post("/create_qr",[teacher.create_qr],(req,resp)=>{
+    
+})
+
+app.get("/create_classroom",[helper.authorize_user],(req,resp)=>{
     resp.render("create_classroom");
 })
 
-
-app.get("/login_teacher",[teacher.login_teacher_verify],(req,resp,next)=>{
-    resp.send("Login successfull");
+app.post("/create_classroom",[teacher.create_classroom],(req,resp,next)=>{
+    // resp.send("Classroom created successfully")
 })
+
+
+app.get("/classroom_attendance",[teacher.get_sheet],(req,resp)=>{
+    // resp.render("classroom_menu.html")
+})
+
+
+app.get("/teacher_student_details",[helper.authorize_user],(req,resp)=>{
+    resp.render("teacher_student_details")
+
+})
+
+
+app.post("/teacher_student_details",[teacher.InfoDetails],(req,resp)=>{
+
+})
+
+app.post("/all_student_attendance",[teacher.allDetails],(req,resp)=>{
+
+})
+
+
+
+app.get("/logout_teacher",(req,resp)=>{
+    resp.clearCookie('Teach_data')
+    // resp.send("Logout successfull");
+    resp.render("login",{logout_teacher:"Logout successfull"});
+
+})
+
+
+
+
+// app.get("/",(req,resp)=>{
+//     resp.send("hello");
+// })
+
+// app.get("/student_register",[student.student_create],(req,resp)=>{
+//     resp.send("Student Registered Successfully")
+// })
+
+
+//STUDENT MENU ROUTES--------------------------------------------------------------------------------
+
+app.get("/scanner",[helper.authorize_stud],(req,resp)=>{
+    resp.render("scanner_QR");
+})
+
+app.post("/scanner",[teacher.verifyStud],(req,resp)=>{
+
+})
+
+app.get("/student_menu",[helper.authorize_stud],(req,resp)=>{
+    resp.render("student_menu")
+})
+
+//for particular student attendance
+app.post("/student_menu",[student.attendSheet],(req,resp)=>{
+
+})
+
+app.get("/logout_student",(req,resp)=>{
+    resp.clearCookie('stud_data');
+    resp.render("login",{logout_student:"Logout Successfully"});
+})
+
+// ATUTHENTICATION ROUTES ------------------------------------------------------------------
+
+// app.get("/get_auth",[helper.authorize_user],(req,resp)=>{
+
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app.get("/login_teacher",[teacher.login_teacher_verify],(req,resp,next)=>{
+//     resp.send("Login successfull");
+// })
+
+
+
+
 
 
 

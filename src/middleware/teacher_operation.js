@@ -9,8 +9,10 @@ const { generate } = require("randomstring");
 const app = express();
 app.use(cookie());
 const flash = require("express-flash");
+const { student_attendance_model, student_register_model } = require("../model/student_schema.js");
+const { check } = require("express-validator");
 
-app.use(flash())
+const date = new Date();
 
 async function register_teacher(req,resp,next){
 
@@ -26,23 +28,28 @@ async function register_teacher(req,resp,next){
 
         // helper.generateAuthToken(req,resp,next);
 
-        const status = await teacher_reg_data.save();
-        console.log(status);
-        // next();
-        console.log("hello");
-        resp.redirect("/login_display")
+        helper.generateOtp(req,resp,next,teacher_reg_data);
 
     }catch(e)
     {
-        // console.log(e) if error is caugth
-        var msg = "unique id or password already present"
-        resp.render("register_teacher",{e:msg});
+        console.log(e);
     }
 }
 
 async function create_classroom(req,resp,next){
 
     try{
+
+        const teach_data = req.cookies.Teach_data;
+        console.log(teach_data);
+        const check_sub = await teacher.teacher_classroom_model.find({$and:[{year:req.body.select1},{discipline:req.body.discipline},{subject:req.body.subject},{semester:req.body.select2}]});
+        console.log(check_sub)
+        if(check_sub.length != 0)
+        {
+            return resp.render("create_classroom",{copy:"Class already present"});
+        }
+
+
         const create_class =  new teacher.teacher_classroom_model({
             uniqueid:req.cookies.Teach_data,
             year:req.body.select1,
@@ -56,7 +63,8 @@ async function create_classroom(req,resp,next){
 
         const status = await create_class.save();
         console.log(status);
-        next()
+        // next()
+        resp.render("create_classroom",{success:"Classroom created Successfully"});
 
     }catch(e)
     {
@@ -93,7 +101,7 @@ async function login_teacher_verify(req,resp,next){
         resp.redirect("./teacher_menu")
         }
         else{
-            return resp.render("login",{error:"Incorrect password"})
+            return resp.render("login",{error:"Invalid Credentials"})
         }
 
     }catch(e)
@@ -102,7 +110,7 @@ async function login_teacher_verify(req,resp,next){
     }
 }
 
-async function  create_qrcode(req,resp, auth_String)
+async function  create_qrcode(req,resp, auth_String,subject)
 {
     try{
         Qrcode.toDataURL(auth_String, function(err, QR_code)
@@ -118,8 +126,8 @@ async function  create_qrcode(req,resp, auth_String)
         })
         // setTimeout(refresh_qrString.bind(null,data),1000)
         setTimeout(function(){
-            refresh_qrString(req)
-        },180000)
+            refresh_qrString(req,subject)
+        },300000)
         
     }catch(e)
     {
@@ -132,29 +140,36 @@ async function  create_qrcode(req,resp, auth_String)
 
 async function create_qr(req, resp, next)
 {
-        const date = new Date();
-
     try{
-        const year = "TY"
-        const discipline = "CO-1"
-        const sem = "6"
-        const subject = "MAD"
+        console.log(req.body.select1,req.body.select2,req.body.discipline);
+        const check_sub = await teacher.teacher_classroom_model.find({$and:[{year:req.body.select1},{discipline:req.body.discipline},{subject:req.body.subject},{semester:req.body.select2}]});
+        console.log(check_sub)
+        if(check_sub.length == 0)
+        {
+            return resp.render("teacher_menu",{copy:"Class is not created for the requested QR code"});
+        }
+
+        const year = req.body.select1
+        const discipline = req.body.discipline
+        const sem = req.body.select2
+        const subject = req.body.subject;
 
         const random_str = random.generate(7);
         const auth_String = random_str + " "+ year + " " + discipline + " " + sem + " " + subject;
         // console.log(auth_String);
 
+        console.log(auth_String);
         const data = req.cookies.Teach_data;
-        const status = await teacher.teacher_classroom_model.updateMany({uniqueid:data},{
+        const status = await teacher.teacher_classroom_model.findOneAndUpdate({uniqueid:data,subject:subject},{
             $set:{
                 authString:auth_String,
             },
             $push:{
                 create_qr_dates: date.toLocaleDateString() 
             }
-        })
+        },{new:true})
         console.log(status);
-        create_qrcode(req, resp, auth_String)
+        create_qrcode(req, resp, auth_String,subject)
         
     }catch(e)
     {
@@ -163,21 +178,116 @@ async function create_qr(req, resp, next)
 }
 
 
-async function refresh_qrString(req)
+async function refresh_qrString(req,subject)
 {
     try
     {
-        const data = req.cookies.data;
-        const status = await teacher.teacher_classroom_model.updateOne({uniqueid:data},{
+        const data = req.cookies.Teach_data;
+        console.log(subject);
+        const status = await teacher.teacher_classroom_model.findOneAndUpdate({uniqueid:data,subject:subject},{
             $set:{
                 authString:null
             }
-        })
-        console.log(status);
+        },{new:true})
+        console.log("Refresh String :",status);
     }catch(e)
     {
         console.log(e);
     }
 }
 
-module.exports= {register_teacher,create_classroom,login_teacher_verify, create_qr};
+
+async function get_sheet(req,resp)
+{
+
+    try{
+    const teacher_id = req.cookies.Teach_data;
+    console.log("Teacher ID : ",teacher_id);
+    const teach_data = await teacher.teacher_classroom_model.find({uniqueid:teacher_id})
+    // console.log("Teacher Data : ",teach_data);
+    resp.render("classroom_menu",{teach_data:teach_data});
+    // console.log("Teacher length : ",teach_data[0].length);
+    console.log("Teacher Info : ",teach_data[0].year,"\n\n")
+    }
+    catch(e)
+    {
+        // resp.render("teacher_menu")
+        console.log(e);
+    }
+
+}
+
+async function verifyStud(req,resp)
+{
+    
+    try{
+        const data = req.cookies.stud_data;
+        const details = data.split(" ");
+        const qr_data = req.body.qrdata;
+        const qr_details = qr_data.split(" ");
+        // console.log(data,qr_data);
+        const subject = qr_details[4];
+        const mark_present = await student_attendance_model.updateOne({roll_no:details[0],year:details[1],discipline:details[2]},{
+                $push:{
+                    [subject]:date.toLocaleDateString()
+                }
+        })
+        console.log(mark_present)
+    }
+    catch(e)
+    {
+        console.log(e)
+        resp.render("scanner_QR",{msg:"Something went wrong please Login Again!!"})
+    }
+}
+
+async function InfoDetails(req,resp)
+{
+    try{
+    const year = req.body.select1;
+    const semester = req.body.select2;
+    const discipline = req.body.discipline;
+    const subject = req.body.subject;
+    const data = req.cookies.Teach_data;
+    // console.log(year,semester,discipline,subject);
+    const dept = year + discipline
+
+    const student_data = await student_register_model.find({$and:[{year:year},{discipline:discipline}]})
+    console.log("Student data :",student_data);
+    // const student_attend = await student_attendance_model.find({$and:[{year:year},{discipline:discipline}]}).select({[subject]:1})
+    // console.log("Student attendanace : ",student_attend[0][subject][1]);
+
+    // const teacher_atten = await teacher.teacher_classroom_model.find({$and:[{uniqueid:data},{year:year},{discipline:discipline},{subject:subject}]}).select({create_qr_dates:1})
+    // console.log(teacher_atten[0].create_qr_dates);
+    
+    resp.render("all_student_details",{student_data :student_data,dept:dept})
+    }
+    catch(e)
+    {
+        console.log(e)
+    }
+}
+
+async function allDetails(req,resp)
+{
+    const subject= req.body.subject;
+    const year = req.body.year;
+    const discipline = req.body.discipline;
+    const semester = req.body.semester;
+
+    console.log(year,subject,discipline,semester);
+
+    const stud_data = await student_attendance_model.find({$and:[{year:year},{discipline:discipline},{semester:semester}]}).select({[subject]:1,roll_no:1,name:1});
+    console.log(stud_data[0][subject][0]); // printind student date
+
+
+    const teach_data = await teacher.teacher_classroom_model.find({$and:[{year:year},{discipline:discipline},{subject:subject}]}).select({create_qr_dates:1});
+    console.log(teach_data[0].create_qr_dates);
+
+    const dates = teach_data[0].create_qr_dates
+
+    resp.render("all_student_attendance",{stud_data:stud_data,dates:dates,dept:year+discipline,subject:subject})
+
+
+}
+module.exports= {register_teacher,create_classroom,login_teacher_verify, create_qr,get_sheet,verifyStud,InfoDetails,allDetails};
