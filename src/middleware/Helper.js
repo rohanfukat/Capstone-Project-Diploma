@@ -67,7 +67,7 @@ async function createCookie(req,resp,next,data,token)
 {
     resp.cookie("Teach_data",data,{ expires: new Date(Date.now() + 1000*60*60*24)});
 
-    resp.cookie("Teach_authToken",token,{ expires: new Date(Date.now() + 1000*60*60*24)});
+    resp.cookie("Teach_authToken",token);
 
     const cookie = req.cookies.data;
     console.log("Cookie Stored : "+cookie);
@@ -82,7 +82,7 @@ async function createCookie(req,resp,next,data,token)
 async function createCookie_stud(req,resp,next,data,token)
 {
     resp.cookie("stud_data",data,{ expires: new Date(Date.now() + 1000*60*60*24)});
-    resp.cookie("stud_authToken",token,{ expires: new Date(Date.now() + 1000*60*60*24)});
+    resp.cookie("stud_authToken",token);
     const cookie = req.cookies.data;
     // const sep = cookie.split(" ");
     // console.log("Cookie : "+sep[1]);
@@ -396,5 +396,29 @@ async function verify_Otp_stud(req,resp,next)
 }
 
 
+async function verifyStud(req,resp)
+{
+        // const teacher = req.body.qrdata; console.log(teacher);
+        // qr_teach_data = teacher.split(" "); console.log(typeof(qr_teach_data[1]));
+        // const qr_teach_subject = qr_teach_data[4];
+        // const qr_teach_year = qr_teach_data[1];
+        // const qr_teach_discipline = qr_teach_data[2];
+        // const qr_teach_sem = qr_teach_data[3];
+
+        const teach_data = await teacher.teacher_classroom_model.find({$and:[{year:"TY"},{discipline:"CO1"},{subject:"PWP"}]});
+        console.log(teach_data)
+}
+
+async function checking (req,resp,next)
+{
+    const data = req.cookies.Teach_data;
+    console.log(data);
+    date = new Date()
+    today = date.toLocaleDateString();
+    const count = await teacher.teacher_classroom_model.find({year:"TY",discipline:"CO1"}).select({create_qr_dates:1})
+    console.log(count[0].create_qr_dates);
+    const dates = count[0].create_qr_dates;
+}
+
 module.exports={generateAuthToken,createCookie,createCookie_stud,redirect_user,
-    authorize_user,generateOtp,verify_Otp,generateOtp_Stud,verify_Otp_stud,authorize_stud};
+    authorize_user,generateOtp,verify_Otp,generateOtp_Stud,verify_Otp_stud,authorize_stud,verifyStud,checking};

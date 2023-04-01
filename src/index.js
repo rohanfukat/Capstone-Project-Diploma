@@ -224,6 +224,10 @@ app.post("/scanner",[teacher.verifyStud],(req,resp)=>{
 
 })
 
+app.post("/scan_qr",[teacher.verifyStud],(req,resp)=>{
+    
+})
+
 app.get("/student_menu",[helper.authorize_stud],(req,resp)=>{
     resp.render("student_menu")
 })
@@ -235,10 +239,14 @@ app.post("/student_menu",[student.attendSheet],(req,resp)=>{
 
 app.get("/logout_student",(req,resp)=>{
     resp.clearCookie('stud_data');
-    resp.clearCookie('stud_authToken');
+    // resp.clearCookie('stud_authToken');
     resp.render("login",{logout_student:"Logout Successfully"});
 })
 
+
+app.get("/demo",[helper.checking],(req,resp)=>{
+    
+})
 // ATUTHENTICATION ROUTES ------------------------------------------------------------------
 
 // app.get("/get_auth",[helper.authorize_user],(req,resp)=>{

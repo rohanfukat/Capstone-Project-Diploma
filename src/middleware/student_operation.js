@@ -70,6 +70,7 @@ async function student_login_verify(req,resp,next)
         if(macAddress == verify_password[0].mac_address)
        { 
 
+
         if(password == verify_password[0].password && req.cookies.stud_authToken == verify_password[0].token)
         {
             const year = verify_password[0].year;
@@ -107,7 +108,7 @@ async function attendSheet(req,resp)
     const discipline = req.body.discipline
     const subject = req.body.subject
 
-    const getStudent = await student.student_attendance_model.find({roll_no:stud_data[0]}).select({[subject]:1})
+    const getStudent = await student.student_attendance_model.find({roll_no:stud_data[0]}).select({[subject]:1}).sort({roll_no:1})
     console.log(getStudent[0][subject]); //printing student subject dates
 
     const student_date = getStudent[0][subject]

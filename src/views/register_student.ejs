@@ -113,7 +113,7 @@
       form1 = document.getElementById("form1");
       dept = document.getElementById("dept");
       year = document.getElementById("year");
-      sem = document.getElementById("semester") ;
+      sem = document.getElementById("semester");
 
       if(name.length > 5 || name.length!="")
       {
@@ -125,11 +125,11 @@
           {
             if(password.value==cpassword.value)
             {
-              // if(dept.value=="" || year.value == "" || sem.value=="")
-              // {
+              if(dept.value!="" || year.value != "" || sem.value=="")
+              {
                 form1.submit()
-              // }
-              // else{alert("Please select options from drop-down box")}
+              }
+              else{alert("Please select options from drop-down box")}
             }
             else{ alert ( "Password and Confirm password doesn't match")}
             
