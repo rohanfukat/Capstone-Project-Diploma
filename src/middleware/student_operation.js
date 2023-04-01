@@ -67,11 +67,11 @@ async function student_login_verify(req,resp,next)
         const verify_password = await student.student_register_model.find({roll_no:roll}).select({password:1,year:1,discipline:1,mac_address:1,token:1}) 
         console.log(verify_password[0].token, req.body.stud_authToken);
 
-        if(macAddress == verify_password[0].mac_address)
-       { 
+    //     if(macAddress == verify_password[0].mac_address)
+    //    { 
+    //     && req.cookies.stud_authToken == verify_password[0].token
 
-
-        if(password == verify_password[0].password && req.cookies.stud_authToken == verify_password[0].token)
+        if(password == verify_password[0].password )
         {
             const year = verify_password[0].year;
             const discipline = verify_password[0].discipline;
@@ -88,8 +88,8 @@ async function student_login_verify(req,resp,next)
         else{
             return resp.render("login",{error : "Invalid Credentials"})
         }
-    }
-    else{ resp.render("login",{not_device:" This device is not authorized for given roll_no"})}
+    // }
+    // else{ resp.render("login",{not_device:" This device is not authorized for given roll_no"})}
 
     }catch(e)
     {

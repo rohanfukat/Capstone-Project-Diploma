@@ -195,8 +195,8 @@ app.post("/all_student_attendance",[teacher.allDetails],(req,resp)=>{
 
 
 app.get("/logout_teacher",(req,resp)=>{
-    resp.clearCookie('Teach_data')
-    resp.clearCookie('Teach_authToken')
+    // resp.clearCookie('Teach_data')
+    // resp.clearCookie('Teach_authToken')
     // resp.send("Logout successfull");
     resp.render("login",{logout_teacher:"Logout successfull"});
 
@@ -238,14 +238,14 @@ app.post("/student_menu",[student.attendSheet],(req,resp)=>{
 })
 
 app.get("/logout_student",(req,resp)=>{
-    resp.clearCookie('stud_data');
+    // resp.clearCookie('stud_data');
     // resp.clearCookie('stud_authToken');
     resp.render("login",{logout_student:"Logout Successfully"});
 })
 
 
 app.get("/demo",[helper.checking],(req,resp)=>{
-    
+
 })
 // ATUTHENTICATION ROUTES ------------------------------------------------------------------
 
