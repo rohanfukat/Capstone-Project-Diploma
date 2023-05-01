@@ -133,7 +133,6 @@ async function  create_qrcode(req,resp, auth_String,subject)
     {
         console.log(e)
     }
-
 }
 
 
@@ -213,17 +212,15 @@ async function get_sheet(req,resp)
     }
     catch(e)
     {
-        // resp.render("teacher_menu")
-        console.log(e);
+        // resp.render("teacher_menu",{data:"Classroom not created"})
+        // console.log(e); Data not found of
     }
 
 }
 
 async function verifyStud(req,resp)
-{
-    
+{    
     try{
-        console.log("hi");
         const data = req.cookies.stud_data;
         const details = data.split(" ");
         const qr_data = req.body.qrdata;
@@ -241,8 +238,16 @@ async function verifyStud(req,resp)
         const teach_data = await teacher.teacher_classroom_model.find({$and:[{year:data_teacher[1]},{discipline:data_teacher[2]},{subject:data_teacher[4]}]});
         console.log(teach_data[0].authString);
 
+        const stud_data = await student_attendance_model.find({roll_no:details[0],year:details[1],discipline:details[2]})
+        const stud_dates = stud_data[0][subject];
+
+        if(stud_dates.includes(date.toLocaleDateString())){
+            return resp.render("scanner_QR",{already_present:"You are already Present"})
+        }
+
         if(teach_data[0].authString==req.body.qrdata)
         {
+            
         // console.log(teach_data);
         const mark_present = await student_attendance_model.updateOne({roll_no:details[0],year:details[1],discipline:details[2]},{
                 $push:{
@@ -314,7 +319,6 @@ async function allDetails(req,resp)
         resp.render("all_student_attendance",{error_msg:"Data not found"})
         console.log(e)
     }
-
-
 }
+
 module.exports= {register_teacher,create_classroom,login_teacher_verify, create_qr,get_sheet,verifyStud,InfoDetails,allDetails};

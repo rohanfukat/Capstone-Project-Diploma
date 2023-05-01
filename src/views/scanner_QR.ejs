@@ -6,18 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
-
-
-
 <body>
     <header class="header">
-        <!-- Logo -->
+        Logo
         <a href="#" class="logo">Student</a>
-        <!-- Hamburger icon -->
+        Hamburger icon
         <input class="side-menu" type="checkbox" id="side-menu" />
         <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
-        <!-- Menu -->
+        Menu
         <nav class="nav">
           <ul class="menu" >
             <li id="one" onclick="chnage(this)"><a href="/student_menu"><b id="one" class="b">View Attendance</b></a></li>
@@ -439,6 +435,13 @@ div {
               alert(success);
             </script>
             <% } %>
+
+            <% if(locals.already_present) { %>
+                <script>
+                      let already_present = '<%= already_present %>';
+                  alert(already_present);
+                </script>
+                <% } %>
     
           <% if(locals.msg) { %>
             <script>
@@ -448,28 +451,27 @@ div {
             <% } %>
     
    
-<script>
-
-        const scanner=new Html5QrcodeScanner('reader',{
-        qrbox:{
-            width:250,
-            height:250,
-               },
-      })
-
-    scanner.render(success,error);
-
-    function success(result){
-        form = document.getElementById("form");
-        document.getElementById("t1").value=result.toString();
-        alert(result);
-        form.submit();
-    }
-    
-    function error(){
+            <script>
+                const scanner = new Html5QrcodeScanner('reader', {
+                    qrbox: {
+                        width: 1000,
+                        height: 1000,
+                    },
+                })
         
-    }  
-</script>
+                scanner.render(success, error);
+        
+                function success(result) {
+                    var form = document.getElementById("form");
+                    document.getElementById("t1").value = result.toString();
+                    alert(result);
+                    form.submit();
+                }
+        
+                function error() {
+                    // alert("Scanned Unsucessfull!!")
+                }  
+            </script>
     
 </body>
 </html>
@@ -483,7 +485,7 @@ div {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <body id="my">
-    <form id="forme" name="" method="">
+    <form id="form" name="form" action="/scanner" method="post">
         <header class="header">
             Logo
             <a href="#" class="logo">Student</a>
@@ -508,7 +510,7 @@ div {
 
                 <div id="reader" style="width: 600px"></div>
 
-                <form action="/scanner" method="post" id="form">
+                <form action="/scan_qr" method="post" id="form">
                     <input type="text" name="data" id="t1" hidden="true">
                 </form>
             </div>
@@ -894,14 +896,28 @@ div {
     </form>
     </div>
     </div>
-    </form>
+    
+     <% if(locals.success) { %>
+        <script>
+              let err = '<%=success %>';
+          alert(err);
+        </script>
+        <% } %> 
 
     <% if(locals.msg) { %>
         <script>
               let error = '<%= msg %>';
           alert(error);
         </script>
-        <% } %>
+        <% } %> 
+
+            
+            <% if(locals.msg) { %>
+                <script>
+                      let error = '<%= msg %>';
+                  alert(error);
+                </script>
+                <% } %> 
 
     <script>
         const scanner = new Html5QrcodeScanner('reader', {
@@ -914,7 +930,7 @@ div {
         scanner.render(success, error);
 
         function success(result) {
-            form = document.getElementById("form");
+            var form = document.getElementById("form");
             document.getElementById("t1").value = result.toString();
             alert(result);
             form.submit();

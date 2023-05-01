@@ -19,9 +19,11 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
     "express-validator": "^6.15.0",
+    "geolib": "^3.3.3",
     "getmac": "^5.20.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.10.0",
+    "node-geocoder": "^4.2.0",
     "qrcode": "^1.5.1",
     "randomstring": "^1.2.3",
     "twilio": "^4.9.0"

@@ -25,6 +25,7 @@
         <div class="background_color">
             <div class="main">
                 <div class="cards">
+                    <% if(locals.teach_data) {%>
                     <form action = "/all_student_attendance" method="post">
                         <div class="item" id="div1">
                             <div class="headsub">
@@ -41,6 +42,7 @@
                             </div>
                         </div>
                         </form>
+                        
                     <% for (let i=0;i < teach_data.length; i++){%>
                         <form action = "/all_student_attendance" method="post">
                         <div class="item" >
@@ -59,6 +61,7 @@
                              <input type="submit" value="View" class="viewbtn_style">
                         </div>
                         </form>
+                        <% } %>
                         <% } %>
                 </div>
             </div>

@@ -64,6 +64,13 @@
         </div>
   </form>
 
+  <% if(locals.data) { %>
+    <script>
+          let data = '<%=data %>';
+      alert(data);
+    </script>
+    <% } %>
+
   <script>
     function validate()
 {

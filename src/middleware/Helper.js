@@ -111,8 +111,6 @@ async function redirect_user(req,resp,next)
             return "Student Redirected Successfully";
         }
         // else{   next()  }
-
-    
     }
 
 
