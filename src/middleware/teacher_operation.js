@@ -205,7 +205,7 @@ async function get_sheet(req,resp)
     const teach_data = await teacher.teacher_classroom_model.find({uniqueid:teacher_id})
     // console.log("Teacher Data : ",teach_data);
 
-    resp.render("classroom_menu",{teach_data:teach_data});
+    resp.render("classroom_menu",{teach_data:teach_data,data:"data"});
 
     // console.log("Teacher length : ",teach_data[0].length);
     console.log("Teacher Info : ",teach_data[0].year,"\n\n")
