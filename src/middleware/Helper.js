@@ -41,14 +41,14 @@ async function generateAuthToken(req,resp,next)
 
         }
 
-
+        //For student
         if(req.body.teacher_name == null)
         {
             const payload_student = {name:req.body.stud_roll};
             console.log("Student roll_no : "+ req.body.student_roll);
-            const token = jwt.sign(payload_student, "eoiwre0283409dklsjLJDS;LFJASLJFWI3O2",{
-                expiresIn:"60"
-            });
+            const token = jwt.sign(payload_student, "eoiwre0283409dklsjLJDS;LFJASLJFWI3O2");
+
+            //secret key for creating jwt token eoiwre0283409dklsjLJDS;LFJASLJFWI3O2
 
             const setToken = await student.student_register_model.updateOne({roll_no:req.body.student_roll},{
             $set : {token : token}
@@ -76,7 +76,6 @@ async function createCookie(req,resp,next,data,token)
     else{
         console.log("Cookie set : ",false)
     }
-    
 }
 
 async function createCookie_stud(req,resp,next,data,token)
@@ -135,7 +134,6 @@ async function redirect_user(req,resp,next)
         {
             console.log("Error",error)
         }
-
 }
 
 

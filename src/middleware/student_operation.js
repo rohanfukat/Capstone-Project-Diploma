@@ -13,25 +13,49 @@ const os = require("os");
 async function student_register(req,resp,next)
 {
     try{
+        const macAddress = Object.values(os.networkInterfaces())
+        .flat()
+        .filter(iface => !iface.internal && iface.mac !== '00:00:00:00:00:00')
+        .map(iface => iface.mac)
+        .shift();
+ 
     const student_reg_data = new student.student_register_model({
-        roll_no:req.body.stud_roll,
-        Name:req.body.stud_name,
-        password:req.body.stud_pass,
-        year:req.body.stud_year,
-        role:"student",
-        discipline:req.body.stud_dept,
-        semester:req.body.stud_sem,
-        phone_number:req.body.stud_phone,
+        roll_no:req.body.stud_roll.trim(),
+        Name:req.body.stud_name.trim(),
+        password:req.body.stud_pass.trim(),
+        year:req.body.stud_year.trim(),
+        role:"student".trim(),
+        discipline:req.body.stud_dept.trim(),
+        semester:req.body.stud_sem.trim(),
+        phone_number:req.body.stud_phone.trim(),
+        mac_address:macAddress.trim()
     })
     console.log(req.body.stud_phone)
-    helper.generateOtp_Stud(req,resp,student_reg_data);
+    const status = await student_reg_data.save();
+    console.log(status)
+}catch(e)
+{
+    // console.log(e)
+    return resp.render("register_student",{error:"Roll No. OR Phone number OR Password is already present"})
+}
+
+try{
+    const attenstud = new student.student_attendance_model({
+        roll_no:req.body.stud_roll.trim(),
+        year:req.body.stud_year.trim(),
+        discipline:req.body.stud_dept.trim(),
+        semester:req.body.stud_sem.trim()
+})
+
+const attenesult = await attenstud.save()
+console.log("Student Attendance :",attenesult);
+    // helper.generateOtp_Stud(req,resp,student_reg_data);
 
     // const student_attendance_model = new mongoose.model("TYCO1",student_schema)
     // console.log(req.body.stud_roll);
-    // const status = await student_reg_data.save();
-    // console.log(status)
-    // resp.render("login",{msg:"Registered Successfully, Please Login to Verify"})
-    // console.log("Student Registered Successfully");
+
+    resp.render("login",{msg:"Registered Successfully, Please Login to Verify"})
+    console.log("Student Registered Successfully");
     }
     catch(e)
     {
@@ -68,8 +92,8 @@ async function student_login_verify(req,resp,next)
         console.log(verify_password[0].token, req.body.stud_authToken);
 
         console.log(macAddress);
-    //     if(macAddress == verify_password[0].mac_address)
-    //    { 
+        if(macAddress == verify_password[0].mac_address)
+       { 
     //     && req.cookies.stud_authToken == verify_password[0].token
 
         if(password == verify_password[0].password )
@@ -77,7 +101,7 @@ async function student_login_verify(req,resp,next)
             const year = verify_password[0].year;
             const discipline = verify_password[0].discipline;
             const data = req.body.student_roll + " " +year + " " + discipline
-            console.log(data);
+            console.log("Data from cookie : ",data);
 
             const token = await helper.generateAuthToken(req,resp,next);
 
@@ -89,14 +113,13 @@ async function student_login_verify(req,resp,next)
         else{
             return resp.render("login",{error : "Invalid Credentials"})
         }
-    // }
-    // else{ resp.render("login",{not_device:" This device is not authorized for given roll_no"})}
+    }
+    else{ resp.render("login",{not_device:" This device is not authorized for given roll_no"})}
 
     }catch(e)
     {
         console.log(e);
     }
-
 }
 
 async function attendSheet(req,resp)

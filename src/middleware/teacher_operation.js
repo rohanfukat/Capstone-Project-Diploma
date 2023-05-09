@@ -19,11 +19,11 @@ async function register_teacher(req,resp,next){
     try{
         // const hashpassword = await bcrypt.hash(); // do ehile frontend
         const teacher_reg_data =  new teacher.teacher_register_model({
-            uniqueid:req.body.teacher_id,
-            name:req.body.teacher_name,
-            password:req.body.teacher_password,
+            uniqueid:req.body.teacher_id.trim(),
+            name:req.body.teacher_name.trim(),
+            password:req.body.teacher_password.trim(),
             role:"teacher",
-            mobileno:req.body.teacher_no
+            mobileno:req.body.teacher_no.trim()
         })
 
         // helper.generateAuthToken(req,resp,next);
@@ -203,11 +203,15 @@ async function get_sheet(req,resp)
     const teacher_id = req.cookies.Teach_data;
     console.log("Teacher ID : ",teacher_id);
     const teach_data = await teacher.teacher_classroom_model.find({uniqueid:teacher_id})
-    // console.log("Teacher Data : ",teach_data);
+    // console.log("Teacher Data : ",teach_data,typeof(teach_data)); Checking the object
 
-    resp.render("classroom_menu",{teach_data:teach_data,data:"data"});
+    if(teach_data.length==0)
+    {
+        return resp.render("create_classroom",{data:"Please create classroom first"})
+    }else{
 
-    // console.log("Teacher length : ",teach_data[0].length);
+    resp.render("classroom_menu",{teach_data:teach_data,data:"data"});}
+
     console.log("Teacher Info : ",teach_data[0].year,"\n\n")
     }
     catch(e)

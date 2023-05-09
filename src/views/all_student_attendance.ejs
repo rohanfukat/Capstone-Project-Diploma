@@ -68,17 +68,22 @@
                     <td>
                         <%- stud_data[d].roll_no %>
                     </td>
-                   <% for (let a = 0 ; a < dates.length ; a++ ) {%>
-                      <% if(stud_data[d][subject][a]==dates[a]) {%>
-                            <td class="col">
-                                P
-                            </td>
-                       <% } else { %>
-                            <td class="col">
-                              <b ><p style="color:red">A</p></b>
-                            </td>
-                      <%  } %>
-                    <% } %>
+            
+
+                              
+                       <% for (let z = 0 ; z < dates.length ; z++ ) {%>
+                        <%let student_dates = stud_data[d][subject]; %>
+                              <!-- <%= student_dates %> For checking dates present in the array or not -->
+                               <% if (student_dates.includes(dates[z])) { %>
+                                                <td>
+                                                  P
+                                                </td>
+                                                <% } else { %>
+                                                  <td>
+                                                    <b ><p style="color:red">A</p></b>
+                                                  </td>
+                                                  <% } %>
+                   <% } %>
                 </tr> 
                 <%} %>
             </table>

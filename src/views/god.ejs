@@ -3,6 +3,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 
 <head>
@@ -49,40 +51,40 @@
         <!-- <div class="table1"> -->
           <h1 id="dept"><%= dept %></h1>
 <%- stud_data[0][subject][1]%>
-<table border="1" colspan class="table1">
-    <tr>
-      <td>
-        <b>Roll_No</b>
-      </td>
-      <% for(let i = 0 ; i < dates.length ; i++) { %>
-        <td class="col">
-          <b><%= dates[i] %></b>
-        </td>
-      <%}%>
-    </tr>
-    <% for (let d = 0 ; d < stud_data.length ; d++) {%>
-      <tr>
-        <td>
-          <%= stud_data[d].roll_no %>
-        </td>
-        <% for (let a = 0 ; a < dates.length ; a++ ) {%>
-          <% for (var z = a ; z <= a ; z++ ) {%>
-            <% if(stud_data[d][subject][z] === dates[a]) { %>
-              <td class="col">
-                P
-              </td>
-            <% } else { %>
-              <td class="col">
-                <b><p style="color:red">A</p></b>
-    
-              </td>
-            <% } %>
-          <% } %>
-        <% } %>
-      </tr> 
-    <%} %>
-  </table>
-  
+          <table border="1" colspan class="table1">
+            <tr>
+                <td><b>
+                   Roll_No
+                </b>
+                </td>
+                <% for(let i = 0 ; i < dates.length ; i++) { %>
+                    <td class="col">
+                      <b>
+                        <%= dates[i] %>
+                      </b>
+                    </td>
+                <%}%>
+            </tr>
+            <% for (let d = 0 ; d < stud_data.length ; d++) {%>
+                <tr>
+                    <td>
+                        <%- stud_data[d].roll_no %>
+                    </td>
+                   <% for (let a = 0 ; a < dates.length ; a++ ) {%>
+                      <% if(stud_data[d][subject][a]==dates[a]) {%>
+                            <td class="col">
+                                P
+                            </td>
+                       <% } else { %>
+                            <td class="col">
+                              <b ><p style="color:red">A</p></b>
+                            </td>
+                      <%  } %>
+                    <% } %>
+                </tr> 
+                <%} %>
+            </table>
+        
         
     </div>
         </div>
@@ -492,3 +494,4 @@ font-size:2vw !important;
 </head>
 
 </html>
+

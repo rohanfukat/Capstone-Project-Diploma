@@ -664,6 +664,12 @@ form .button input {
     }
 }
   </script>
+      <% if(locals.data) { %>
+        <script>
+              let data = '<%=data %>';
+          alert(data);
+        </script>
+        <% } %>
 </body>
 </head>
 

@@ -14,18 +14,16 @@
             <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
             <nav class="nav">
                 <ul class="menu">
-                    <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Students Details</b></a></li> 
-                    <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Create
-                                QR</b></a></li> 
+                    <li id="one" onclick="chnage(this)"><a href="/teacher_student_details"><b id="one" class="b">Students Details</b></a></li> 
+                    <li id="one" onclick="chnage(this)"><a href="/teacher_menu"><b id="one" class="b">Create QR</b></a></li> 
                     <li id="two" onclick="chnage(this)"><a href="/classroom_attendance"><b class="b">Classroom </b></a> </li>
-                    <li id="three" onclick="chnage(this)""><a href=" #"><b class="b" id="three">Logout</b></a></li>
+                    <li id="three" onclick="chnage(this)""><a href="/logout_teacher"><b class="b" id="three">Logout</b></a></li>
                 </ul>
             </nav>
         </header>
         <div class="background_color">
             <div class="main">
                 <div class="cards">
-                    <% if(locals.teach_data) {%>
                     <form action = "/all_student_attendance" method="post">
                         <div class="item" id="div1">
                             <div class="headsub">
@@ -61,7 +59,6 @@
                              <input type="submit" value="View" class="viewbtn_style">
                         </div>
                         </form>
-                        <% } %>
                         <% } %>
                 </div>
             </div>

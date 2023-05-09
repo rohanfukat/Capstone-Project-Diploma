@@ -98,6 +98,13 @@
     </script>
     <% } %>
 
+    <% if(locals.error) { %>
+      <script>
+            let duperror = '<%= error %>';
+        alert(duperror);
+      </script>
+      <% } %>
+
 <!--MY SCRIPT-->
   <script>
     function validation()     
