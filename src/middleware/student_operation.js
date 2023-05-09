@@ -13,11 +13,11 @@ const os = require("os");
 async function student_register(req,resp,next)
 {
     try{
-        const macAddress = Object.values(os.networkInterfaces())
-        .flat()
-        .filter(iface => !iface.internal && iface.mac !== '00:00:00:00:00:00')
-        .map(iface => iface.mac)
-        .shift();
+        // const macAddress = Object.values(os.networkInterfaces())
+        // .flat()
+        // .filter(iface => !iface.internal && iface.mac !== '00:00:00:00:00:00')
+        // .map(iface => iface.mac)
+        // .shift();
  
     const student_reg_data = new student.student_register_model({
         roll_no:req.body.stud_roll.trim(),
@@ -92,8 +92,8 @@ async function student_login_verify(req,resp,next)
         console.log(verify_password[0].token, req.body.stud_authToken);
 
         console.log(macAddress);
-        if(macAddress == verify_password[0].mac_address)
-       { 
+    //     if(macAddress == verify_password[0].mac_address)
+    //    { 
     //     && req.cookies.stud_authToken == verify_password[0].token
 
         if(password == verify_password[0].password )
@@ -113,8 +113,8 @@ async function student_login_verify(req,resp,next)
         else{
             return resp.render("login",{error : "Invalid Credentials"})
         }
-    }
-    else{ resp.render("login",{not_device:" This device is not authorized for given roll_no"})}
+    // }
+    // else{ resp.render("login",{not_device:" This device is not authorized for given roll_no"})}
 
     }catch(e)
     {
